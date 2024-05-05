@@ -67,7 +67,7 @@ const Login = () => {
                     navigate("/");
                 }
                 else {
-                    toast.warn(`Envalid Details`);
+                    toast.warn(json.message);
                     setIsClicked(false);
                 }
             }
