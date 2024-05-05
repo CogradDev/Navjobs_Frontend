@@ -15,7 +15,9 @@ const Signup = () => {
         bio: "",
         phone: "",
         resume: "",
-        image: ""
+        profile: "",
+        education: [],
+        skills: []
     });
 
     const [showPassword, setShowPassword] = useState(false);
@@ -28,6 +30,30 @@ const Signup = () => {
             [key]: value
         });
     };
+
+    const handleApplicant = async () => {
+        const response = await fetch(apiList.signup, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ name: signupDetails.uName, email: signupDetails.uEmail, password: signupDetails.password, type: signupDetails.type, resume: signupDetails.resume, profile: signupDetails.profile, education: signupDetails.education, skills: signupDetails.skills, rating: -1 })
+        });
+
+        return response;
+    }
+
+    const handleRecruiter = async () => {
+        const response = await fetch(apiList.signup, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ name: signupDetails.uName, email: signupDetails.uEmail, password: signupDetails.password, type: signupDetails.type, contactNumber: signupDetails.phone, bio: signupDetails.bio })
+        });
+
+        return response;
+    }
 
     const handleLogin = async () => {
         if (!signupDetails.uName) {
@@ -50,19 +76,23 @@ const Signup = () => {
             return toast.warn('Confirm Password do not match !');
         }
 
+        else if (!signupDetails.phone) {
+            return toast.warn("Enter the phone number");
+        }
+
         try {
             if (!isClicked) {
                 setIsClicked(true);
 
                 if (!isOTPSend) {
+                    let response = null;
                     try {
-                        const response = await fetch(apiList.signup, {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify({ name: signupDetails.uName, email: signupDetails.uEmail, password: signupDetails.password })
-                        });
+                        if(signupDetails.type === "applicant"){
+                            response = await handleApplicant();
+                        }
+                        else{
+                            response = await handleRecruiter();
+                        }
 
                         const json = await response.json();
                         if (json.success) {
@@ -71,7 +101,7 @@ const Signup = () => {
                             setIsOTPSend(!isOTPSend);
                         }
                         else {
-                            toast.error(json.error);
+                            toast.error(json.message);
                             setIsClicked(false);
                         }
 
@@ -82,7 +112,12 @@ const Signup = () => {
                     }
 
                 }
-                else if (isOTPSend && signupDetails.otp !== "") {
+                else if (isOTPSend) {
+                    if (!signupDetails.otp) {
+                        setIsClicked(false);
+                        return toast.warn("Enter the otp");
+                    }
+
                     try {
                         const response = await fetch(apiList.verifyotp, {
                             method: 'POST',
@@ -317,7 +352,7 @@ const Signup = () => {
                                         <input
                                             id="phone"
                                             name="phone"
-                                            type="number"
+                                            type="text"
                                             required
                                             className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                                             placeholder="Enter your contact number"
