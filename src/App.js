@@ -9,6 +9,7 @@ import Navbar from './components/homepage/Navbar';
 import ToastAnim from './libs/ToastAnim';
 import Login from './components/loginsingup/Login';
 import Signup from './components/loginsingup/SignUp';
+import Addjobs from './components/recruiter/Addjob';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route exact path="/" element={<Home />}></Route>
           <Route exact path="/login" element={<Login/>}></Route>
           <Route exact path="/signup" element={<Signup/>}></Route>
+          <Route exact path="/addjobs" element={<Addjobs/>}></Route>
         </Routes>
 
       </Router>
