@@ -49,7 +49,7 @@ const Signup = () => {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ name: signupDetails.uName, email: signupDetails.uEmail, password: signupDetails.password, type: signupDetails.type, contactNumber: signupDetails.phone, bio: signupDetails.bio })
+            body: JSON.stringify({ name: signupDetails.uName, email: signupDetails.uEmail, password: signupDetails.password, type: signupDetails.type, contactNumber: "+91" + signupDetails.phone, bio: signupDetails.bio })
         });
 
         return response;
@@ -76,8 +76,8 @@ const Signup = () => {
             return toast.warn('Confirm Password do not match !');
         }
 
-        else if (!signupDetails.phone) {
-            return toast.warn("Enter the phone number");
+        else if (!signupDetails.phone || signupDetails.phone.length < 10 || signupDetails.phone.length > 10) {
+            return toast.warn("Enter 10 digits phone number");
         }
 
         try {
@@ -345,7 +345,7 @@ const Signup = () => {
                                             onChange={(event) => handleChange('bio', event.target.value)} />
                                     </div>
 
-                                    <div>
+                                    <div className='relative'>
                                         <label htmlFor="phone" className="block ml-1">
                                             Contact Number
                                         </label>
@@ -354,11 +354,14 @@ const Signup = () => {
                                             name="phone"
                                             type="text"
                                             required
-                                            className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                                            placeholder="Enter your contact number"
+                                            className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm pl-14"
+                                            placeholder="Enter your 10 digits contact number"
                                             value={signupDetails.phone}
                                             onChange={(event) => handleChange('phone', event.target.value)}
                                         />
+                                        <div className='absolute inset-y-0 top-6 left-1 flex items-center focus:outline-none z-10 text-black"'>
+                                            📱+91
+                                        </div>
                                     </div>
                                 </div>
                         }

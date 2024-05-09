@@ -17,7 +17,7 @@ const Navbar = () => {
 
     let navLinks = [
         { name: "Home", link: "/" },
-        { name: "Jobs", link: "/jobs" },
+        { name: "Add Jobs", link: "/addjobs" },
         { name: "Application", link: "/application" },
         { name: "Profile", link: "/profile" }
     ];
