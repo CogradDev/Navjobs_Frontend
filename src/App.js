@@ -10,23 +10,26 @@ import ToastAnim from './libs/ToastAnim';
 import Login from './components/loginsingup/Login';
 import Signup from './components/loginsingup/SignUp';
 import Addjobs from './components/recruiter/Addjob';
+import AuthState from './context/auth/AuthState';
 
 function App() {
   return (
     <>
-      <Router>
-        <Navbar />
+      <AuthState>
+        <Router>
+          <Navbar />
 
-        <ToastAnim />
+          <ToastAnim />
 
-        <Routes>
-          <Route exact path="/" element={<Home />}></Route>
-          <Route exact path="/login" element={<Login/>}></Route>
-          <Route exact path="/signup" element={<Signup/>}></Route>
-          <Route exact path="/addjobs" element={<Addjobs/>}></Route>
-        </Routes>
+          <Routes>
+            <Route exact path="/" element={<Home />}></Route>
+            <Route exact path="/login" element={<Login />}></Route>
+            <Route exact path="/signup" element={<Signup />}></Route>
+            <Route exact path="/addjobs" element={<Addjobs />}></Route>
+          </Routes>
 
-      </Router>
+        </Router>
+      </AuthState>
     </>
   );
 }
