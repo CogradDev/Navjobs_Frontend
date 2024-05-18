@@ -1,8 +1,10 @@
-export const server = "http://localhost:4444";
+export const server = "http://localhost:5000";
 
 const apiList = {
     login: `${server}/auth/login`,
     signup: `${server}/auth/signup`,
+    sendotp: `${server}/auth/sendotp`,
+    resendotp : `${server}/auth/resendotp`,
     verifyotp: `${server}/auth/verifyotp`,
     uploadResume: `${server}/upload/resume`,
     uploadProfileImage: `${server}/upload/profile`,
