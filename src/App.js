@@ -11,6 +11,7 @@ import RecruiterSignUp from "./components/loginsingup/RecruiterSignUp";
 import ApplicantSignUp from "./components/loginsingup/ApplicantSignUp";
 import About from "./components/homepage/About";
 import AuthState from "./context/auth/AuthState";
+import Footer from "./components/homepage/Footer";
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
               path="/applicantsignup"
               element={<ApplicantSignUp />}
             ></Route>
+            <Route exact path="/footer" element={<Footer />}></Route>
           </Routes>
         </Router>
       </AuthState>

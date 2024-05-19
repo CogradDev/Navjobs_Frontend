@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
+import Job from "../Images/job.png";
 const Home = () => {
   const sliderDet = [
     {
@@ -125,13 +125,18 @@ const Home = () => {
           <div className="mb-8 flex flex-wrap justify-between md:mb-16">
             <div className="mb-6 flex w-full flex-col justify-center sm:mb-12 lg:mb-0 lg:w-3/5 lg:pb-10 lg:pt-40">
               <h1 className="mb-4 text-4xl md:text-5xl font-bold md:mb-8 text-gray-700">
-                Welcome to <span className="text-blue-600">Nav Job Portal</span>{" "}
-                Connecting Talent with Opportunities
+                Discover Opportunities with{" "}
+                <span className="text-blue-600">NavJob</span> : The AI-Powered
+                Job Portal
               </h1>
 
               <p className="max-w-full text-justify  text-gray-500 xl:text-lg">
-                At Nav Job Portal, we are dedicated to bridging the gap between
-                employers and job seekers.
+                <span>Career Growth:</span> Utilize our resources to enhance
+                your skills and stay ahead in the competitive AI landscape.
+              </p>
+              <p className="max-w-full text-justify  text-gray-500 xl:text-lg">
+                <span>Hire Top Talent:</span> Connect with a pool of highly
+                skilled AI professionals ready to drive your projects forward.
               </p>
             </div>
 
@@ -169,10 +174,16 @@ const Home = () => {
                   to="/applicantsignup"
                   className="flex w-1/3 items-center justify-center text-gray-500 transition duration-100 hover:bg-blue-600 hover:text-white"
                 >
-                  Signup
+                  Student
                 </Link>
                 <Link
-                  to="/"
+                  to="/recruitersignup"
+                  className="flex w-1/3 items-center justify-center text-gray-500 transition duration-100 hover:bg-blue-600 hover:text-white"
+                >
+                  HR
+                </Link>
+                <Link
+                  to="/About"
                   className="flex w-1/3 items-center justify-center text-gray-500 transition duration-100 hover:bg-blue-600 hover:text-white"
                 >
                   About
@@ -416,8 +427,49 @@ const Home = () => {
           </div>
         </div>
       </div>
-
-      <div class="bg-white pt-4 sm:pt-10 lg:pt-12">
+      <section class="text-gray-600 body-font">
+        <div class="container px-5 py-24 mx-auto flex flex-wrap">
+          <div class="flex flex-wrap -mx-4 mt-auto mb-auto lg:w-1/2 sm:w-2/3 content-start sm:pr-10">
+            <div class="w-full sm:p-4 px-4 mb-6">
+              <h1 class="title-font font-medium text-xl mb-2 text-gray-900">
+                Moon hashtag pop-up try-hard offal truffaut
+              </h1>
+              <div class="leading-relaxed">
+                Pour-over craft beer pug drinking vinegar live-edge gastropub,
+                keytar neutra sustainable fingerstache kickstarter.
+              </div>
+            </div>
+            <div class="p-4 sm:w-1/2 lg:w-1/4 w-1/2">
+              <h2 class="title-font font-medium text-3xl text-gray-900">
+                2.7K
+              </h2>
+              <p class="leading-relaxed">Students</p>
+            </div>
+            <div class="p-4 sm:w-1/2 lg:w-1/4 w-1/2">
+              <h2 class="title-font font-medium text-3xl text-gray-900">
+                100+
+              </h2>
+              <p class="leading-relaxed">Recuiters</p>
+            </div>
+            <div class="p-4 sm:w-1/2 lg:w-1/4 w-1/2">
+              <h2 class="title-font font-medium text-3xl text-gray-900">35</h2>
+              <p class="leading-relaxed">Got Job</p>
+            </div>
+            <div class="p-4 sm:w-1/2 lg:w-1/4 w-1/2">
+              <h2 class="title-font font-medium text-3xl text-gray-900">20</h2>
+              <p class="leading-relaxed">Onborded</p>
+            </div>
+          </div>
+          <div class="lg:w-1/2 sm:w-1/3 w-full rounded-lg overflow-hidden mt-6 sm:mt-0">
+            <img
+              class="object-cover object-center w-full h-full"
+              src={Job}
+              alt="stats"
+            />
+          </div>
+        </div>
+      </section>
+      {/* <div class="bg-white pt-4 sm:pt-10 lg:pt-12">
         <footer class="mx-auto max-w-screen-2xl px-4 md:px-8">
           <div class="flex flex-col items-center justify-between gap-4 border-t border-blue-400 rounded-md border-b py-6 md:flex-row">
             <nav class="flex flex-wrap justify-center gap-x-4 gap-y-2 md:justify-start md:gap-6">
@@ -529,7 +581,7 @@ const Home = () => {
             reserved.
           </div>
         </footer>
-      </div>
+      </div> */}
     </>
   );
 };
