@@ -33,6 +33,7 @@ const Home = () => {
 
     return (
         <>
+<<<<<<< Updated upstream
             <div className="bg-white pb-6 sm:pb-8 lg:pb-4">
                 <section className="mx-auto max-w-screen-2xl px-4 md:px-8 my-2">
                     <div className="mb-8 flex flex-wrap justify-between md:mb-16">
@@ -40,6 +41,27 @@ const Home = () => {
                             <h1 className="mb-4 text-4xl md:text-5xl font-bold md:mb-8 text-gray-700">Welcome to <span className='text-blue-600'>Nav Job Portal</span> Connecting Talent with Opportunities</h1>
 
                             <p className="max-w-full text-justify  text-gray-500 xl:text-lg">At Nav Job Portal, we are dedicated to bridging the gap between employers and job seekers.</p>
+=======
+            <div class="bg-white pb-6 sm:pb-8 lg:pb-4">
+                <section class="mx-auto max-w-screen-2xl px-4 md:px-8 my-2">
+                    <div class="mb-8 flex flex-wrap justify-between md:mb-16">
+                        <div class="mb-6 flex w-full flex-col justify-center sm:mb-12 lg:mb-0 lg:w-3/5 lg:pb-10 lg:pt-40">
+                            {/* <h1 class="mb-4 text-4xl md:text-5xl font-bold md:mb-8 text-gray-700">Welcome to <span className='text-blue-600'>Nav Job Portal</span> Connecting Talent with Opportunities</h1> */}
+                            <h1 className=" text-xl md:text-6xl font-semibold mx-auto py-5 pb-20 text-center text-blue-600">
+                            Welcome to
+
+
+                                <span className="bg-gradient-to-b from-[#FF512F] to-[#F09819] text-transparent bg-clip-text font-bold">
+                                    {" "}
+                                    Nav Job Portal
+                                </span>
+                                
+                                <span className="bg-gradient-to-b from-[#E65C00] to-[#F9D423] text-transparent bg-clip-text font-bold">
+                                Connecting Talent with Opportunities
+                                </span>
+                            </h1>
+                            <p class="max-w-full leading-relaxed text-richblack-300  xl:text-lg">At Nav Job Portal, we are dedicated to bridging the gap between employers and job seekers. Whether you're a recruiter looking to fill a position with the perfect candidate or an applicant searching for your next career opportunity, our platform provides connection you need to succeed.</p>
+>>>>>>> Stashed changes
                         </div>
 
                         <div className="mb-12 flex w-full md:mb-16 lg:w-2/5 relative">
@@ -66,6 +88,7 @@ const Home = () => {
                 </section>
             </div>
 
+<<<<<<< Updated upstream
             <div className='flex flex-col px-4 overflow-hidden'>
                 <div className='flex flex-col'>
                     <div className='flex flex-col lg:flex-row items-center'>
@@ -103,23 +126,71 @@ const Home = () => {
                             <img src="https://static.vecteezy.com/system/resources/previews/019/152/947/non_2x/busy-employees-with-busy-scheludes-finish-work-targets-on-time-man-busy-work-schedule-free-png.png" alt="" className='absolute bottom-4 right-2 w-40 h-36' />
                         </div>
                     </div>
+=======
+            <div className='min-h-screen flex flex-col px-4 overflow-hidden'>
+                <h1 className="bg-gradient-to-br from-[#833AB4] via-[#FD1D1D] to-[#FCB045] bg-clip-text text-6xl flex justify-center font-semibold text-transparent lg:w-[95%] ">About Us</h1>
+                {/* <div className='flex items-center justify-center'>
+                    <p className='xl:w-4/6 w-full lg:text-center'>Nav Job Portal is a leading online platform designed to revolutionize the way employers and job seekers connect. Founded on the principle of empowering individuals to find their ideal career paths, we strive to create a seamless and efficient recruitment experience for all users.</p>
+                </div> */}
+                <div className=" text-xl md:text-4xl font-semibold mx-auto py-5 pb-20 text-center text-blue-600">
+                    Nav Job Portal is a leading online platform
+
+
+                    <span className="bg-gradient-to-b from-[#FF512F] to-[#F09819] text-transparent bg-clip-text font-bold">
+                        {" "}
+                        designed to revolutionize
+                    </span>
+                    the way employers and job seekers connect.
+                    <span className="bg-gradient-to-b from-[#E65C00] to-[#F9D423] text-transparent bg-clip-text font-bold">
+                        Founded on the principle of empowering individuals to find their ideal career paths, we strive to create a seamless and efficient recruitment experience for all users.
+                    </span>
+>>>>>>> Stashed changes
                 </div>
 
                 {/* <div>
                     <div className='flex items-center justify-center flex-col p-4 my-4'>
-                        <div className='border shadow-lg shadow-gray-500 border-gray-700 m-4 rounded-lg flex flex-col lg:flex-row overflow-hidden lg:w-4/5'>
+                        {/* <div className='border shadow-lg shadow-gray-500 border-gray-700 m-4 rounded-lg flex flex-col lg:flex-row overflow-hidden lg:w-4/5'>
                             <div className='h-48 lg:w-1/3 lg:h-44'>
                                 <img src="https://upload.tanca.io/api/upload/news/6343ec644389eb527e064b59?name=6343ec64668f0NftG1780608-recruitment-process-1.jpeg" alt="" className='object-cover w-full h-full' />
                             </div>
                             <p className='p-2 lg:w-2/3 flex items-center justify-center'>Our mission is to provide a dynamic and inclusive space where recruiters can post job openings, and applicants can discover and apply for opportunities that align with their skills and aspirations. With innovative features and cutting-edge technology, Nav Job Portal facilitates meaningful connections between employers and talented professionals.</p>
+                        </div> */}
+                        <div className="flex flex-col items-center gap-10 lg:flex-row justify-between">
+                            {/*left part*/}
+                            <div className="my-24 flex lg:w-[50%] flex-col gap-10">
+                                <h1 className="bg-gradient-to-br from-[#833AB4] via-[#FD1D1D] to-[#FCB045] bg-clip-text text-4xl font-semibold text-transparent lg:w-[70%] ">Empowering Recruiters and Job Seekers with Nav Job Portal</h1>
+                                <p className="text-base font-medium text-richblack-300 lg:w-[95%]">Our mission is to provide a dynamic and inclusive space where recruiters can post job openings, and applicants can discover and apply for opportunities that align with their skills and aspirations. With innovative features and cutting-edge technology, Nav Job Portal facilitates meaningful connections between employers and talented professionals.</p>
+
+                            </div>
+                            {/*right part*/}
+                            <div >
+                                <img src="https://upload.tanca.io/api/upload/news/6343ec644389eb527e064b59?name=6343ec64668f0NftG1780608-recruitment-process-1.jpeg" alt=""
+                                    className="shadow-[0_0_20px_0] shadow-[#FC6767]" />
+                            </div>
                         </div>
-                        <div className='border shadow-lg shadow-gray-500 border-gray-700 m-4 rounded-lg flex flex-col lg:flex-row-reverse overflow-hidden lg:w-4/5'>
+                        {/* <div className='border shadow-lg shadow-gray-500 border-gray-700 m-4 rounded-lg flex flex-col lg:flex-row-reverse overflow-hidden lg:w-4/5'>
                             <div className='h-48 lg:w-1/3 lg:h-44'>
                                 <img src="https://www.paychex.com/sites/default/files/styles/medium_hq/public/image/2020-09/employee-retention-strategic-employee-recruitment.png?itok=vkuT_MMI" alt="" className='object-cover w-full h-full' />
                             </div>
                             <p className='p-2 lg:w-2/3 flex items-center justify-center'>At Nav Job Portal, we believe in the transformative power of employment. Whether you're a seasoned professional seeking new challenges or a recent graduate embarking on your career journey, we're here to support you every step of the way.
 
                                 Join us today and embark on a journey toward success with Nav Job Portal.</p>
+                        </div> */}
+                        <div className="flex flex-col items-center gap-10 lg:flex-row justify-between">
+                            {/*left part*/}
+
+                            <div >
+                                <img src="https://www.paychex.com/sites/default/files/styles/medium_hq/public/image/2020-09/employee-retention-strategic-employee-recruitment.png?itok=vkuT_MMI" alt=""
+                                    className="shadow-[0_0_20px_0] shadow-[#FC6767] " />
+                            </div>
+                            {/*right part*/}
+                            <div className="my-24 flex lg:w-[50%] flex-col gap-10">
+                                <h1 className="bg-gradient-to-br from-[#833AB4] via-[#FD1D1D] to-[#FCB045] bg-clip-text text-4xl font-semibold text-transparent lg:w-[70%] ">Unlock Your Potential: Join Nav Job Portal Today!</h1>
+                                <p className="text-base font-medium text-richblack-300 lg:w-[95%]">At Nav Job Portal, we believe in the transformative power of employment. Whether you're a seasoned professional seeking new challenges or a recent graduate embarking on your career journey, we're here to support you every step of the way.
+
+                                    Join us today and embark on a journey toward success with Nav Job Portal.</p>
+
+                            </div>
                         </div>
                     </div>
                 </div> */}

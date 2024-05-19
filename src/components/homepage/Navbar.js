@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import authContext from '../../context/auth/authContext';
 import { toast } from 'react-toastify';
 
+
 const Navbar = () => {
 
     const context = useContext(authContext);
@@ -27,16 +28,22 @@ const Navbar = () => {
     let recruiterLink = [
         { name: "Home", link: "/" },
         { name: "Application", link: "/application" },
+<<<<<<< Updated upstream
         { name: "Add Jobs", link: "/addjobs" },
         { name: "My Jobs", link: "/myjobs" },
         { name: "Employees", link: "/emp" },
         { name: "Profile", link: "/recruiterprofile" }
+=======
+        { name: "Profile", link: "/profile" },
+        {name:"About",link:"/About"}
+>>>>>>> Stashed changes
     ];
 
     let applicantLink = [
         { name: "Home", link: "/" },
         { name: "Jobs", link: "/addjobs" },
-        { name: "Profile", link: "/profile" }
+        { name: "Profile", link: "/profile" },
+        {name:"About",link:"/About"}
     ];
 
     const handleopen = () => {
@@ -86,7 +93,7 @@ const Navbar = () => {
                                         <Link to="/" className='lg:ml-4 xl:ml-7 lg:my-0 my-3 list-none relative after:absolute after:bg-blue-500 after:bottom-0 after:left-0 after:h-[2px] after:w-full after:origin-bottom-right after:scale-x-0 lg:hover:after:origin-bottom-left lg:hover:after:scale-x-100 after:transition-transform after:ease-in-out after:duration-300 lg:cursor-pointer'>
                                             Home
                                         </Link>
-                                        <Link to="/" className='lg:ml-4 xl:ml-7 lg:my-0 my-3 list-none relative after:absolute after:bg-blue-500 after:bottom-0 after:left-0 after:h-[2px] after:w-full after:origin-bottom-right after:scale-x-0 lg:hover:after:origin-bottom-left lg:hover:after:scale-x-100 after:transition-transform after:ease-in-out after:duration-300 lg:cursor-pointer'>
+                                        <Link to="/About" className='lg:ml-4 xl:ml-7 lg:my-0 my-3 list-none relative after:absolute after:bg-blue-500 after:bottom-0 after:left-0 after:h-[2px] after:w-full after:origin-bottom-right after:scale-x-0 lg:hover:after:origin-bottom-left lg:hover:after:scale-x-100 after:transition-transform after:ease-in-out after:duration-300 lg:cursor-pointer'>
                                             About
                                         </Link>
                                     </div>
@@ -222,7 +229,7 @@ const Navbar = () => {
 
                                                 </div>
                                             </Link>
-                                            <Link to="/" className={`flex items-center justify-between p-4 border-b border-gray-300`}>
+                                            <Link to="/About" className={`flex items-center justify-between p-4 border-b border-gray-300`}>
                                                 <div className='flex items-center space-x-4'>
                                                     <span className='text-xl'>About</span>
                                                 </div>

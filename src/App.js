@@ -11,9 +11,13 @@ import Login from './components/loginsingup/Login';
 // import Signup from './components/loginsingup/SignUp';
 import Addjobs from './components/recruiter/Addjob';
 import AuthState from './context/auth/AuthState';
+<<<<<<< Updated upstream
 import Profile from './components/recruiter/Profile';
 import RecruiterSignUp from './components/loginsingup/RecruiterSignUp';
 import ApplicantSignUp from './components/loginsingup/ApplicantSignUp';
+=======
+import About from './components/homepage/About';
+>>>>>>> Stashed changes
 
 function App() {
   return (
@@ -26,6 +30,7 @@ function App() {
 
           <Routes>
             <Route exact path="/" element={<Home />}></Route>
+            <Route exact path="/About" element={<About/>}></Route>
             <Route exact path="/login" element={<Login />}></Route>
             {/* <Route exact path="/signup" element={<Signup />}></Route> */}
             <Route exact path="/addjobs" element={<Addjobs />}></Route>
