@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import apiList from '../../libs/apiLists';
 import authContext from '../../context/auth/authContext';
@@ -32,9 +32,9 @@ const Login = () => {
             if (!email) {
                 return toast.warn('Please enter the email address');
             }
-            else if(email){
+            else if (email) {
                 const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                if(!regex.test(email)){
+                if (!regex.test(email)) {
                     return toast.warn("Enter a valid Email type.");
                 }
             }
@@ -96,7 +96,6 @@ const Login = () => {
                         </div>
                     </div>
                     <h2 className={`text-center text-3xl font-extrabold`}>Sign in to your account</h2>
-                    <p className={`text-center`}>Or <Link to="/signup" className='text-blue-500'>Signup</Link> to have an account.</p>
                 </div>
                 <form onSubmit={(e) => e.preventDefault()}>
                     <div>

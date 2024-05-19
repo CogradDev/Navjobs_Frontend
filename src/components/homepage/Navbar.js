@@ -16,22 +16,21 @@ const Navbar = () => {
     })
 
     const [open, setOpen] = useState(false);
-    const [isCartOpen, setCartOpen] = useState(false);
 
     const getClose = () => {
         if (open) {
             setOpen(false);
         }
-        if (isCartOpen) {
-            setCartOpen(false);
-        }
+        document.body.style.overflowY = "auto";
     }
 
     let recruiterLink = [
         { name: "Home", link: "/" },
-        { name: "Add Jobs", link: "/addjobs" },
         { name: "Application", link: "/application" },
-        { name: "Profile", link: "/profile" }
+        { name: "Add Jobs", link: "/addjobs" },
+        { name: "My Jobs", link: "/myjobs" },
+        { name: "Employees", link: "/emp" },
+        { name: "Profile", link: "/recruiterprofile" }
     ];
 
     let applicantLink = [
@@ -39,6 +38,11 @@ const Navbar = () => {
         { name: "Jobs", link: "/addjobs" },
         { name: "Profile", link: "/profile" }
     ];
+
+    const handleopen = () => {
+        setOpen(!open);
+        document.body.style.overflowY = "hidden";
+    }
 
     const handleLogout = () => {
         localStorage.removeItem("type");
@@ -113,7 +117,7 @@ const Navbar = () => {
                                     </div>
                             }
 
-                            <svg onClick={() => { setOpen(!open) }} xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
+                            <svg onClick={handleopen} xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
                                 <path fillRule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h6a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" />
                             </svg>
                         </div>
@@ -125,13 +129,22 @@ const Navbar = () => {
                         {
                             !islogedin ?
                                 <div className='flex items-center justify-between space-x-10'>
+                                    <div className="group relative flex items-center justify-center lg:ml-4 xl:ml-7 lg:my-0 my-3 lg:cursor-pointer">
+                                        <div className='border px-2 py-1 rounded-lg hover:bg-blue-800'>Signup</div>
+                                        <div className="absolute top-8 hidden group-hover:block py-2 text-start w-24 bg-blue-100 text-gray-700 text-sm font-semibold rounded-lg shadow-lg">
+                                            <Link to="/recruitersignup" className="block p-2 hover:scale-105">As Recruiter</Link>
+                                            <Link to="/applicantsignup" className="block p-2 hover:scale-105">As Applicant</Link>
+                                        </div>
+
+                                    </div>
 
                                     <Link to="/login" className='border px-2 py-1 rounded-lg hover:bg-blue-800'>
                                         Login
                                     </Link>
-                                    <Link to="/signup" className='border px-2 py-1 rounded-lg hover:bg-blue-800'>
+
+                                    {/* <Link to="/recruitersignup" className='border px-2 py-1 rounded-lg hover:bg-blue-800'>
                                         Signup
-                                    </Link>
+                                    </Link> */}
 
                                 </div> :
                                 <button className='border px-2 py-1 rounded-lg hover:bg-blue-800' onClick={handleLogout}>
@@ -212,6 +225,32 @@ const Navbar = () => {
                                             <Link to="/" className={`flex items-center justify-between p-4 border-b border-gray-300`}>
                                                 <div className='flex items-center space-x-4'>
                                                     <span className='text-xl'>About</span>
+                                                </div>
+
+                                                <div>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                                                        <path d="M18.59 13.41l-6-6c-.39-.39-1.03-.39-1.42 0-.39.39-.39 1.02 0 1.41L15.17 12l-4.59 4.59c-.39.39-.39 1.02 0 1.41.39.39 1.03.39 1.42 0l6-6c.39-.39.39-1.02 0-1.41z" />
+                                                    </svg>
+
+
+                                                </div>
+                                            </Link>
+                                            <Link to="/applicantsignup" className={`flex items-center justify-between p-4 border-b border-gray-300`}>
+                                                <div className='flex items-center space-x-4'>
+                                                    <span className='text-xl'>SignUp as Applicant</span>
+                                                </div>
+
+                                                <div>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                                                        <path d="M18.59 13.41l-6-6c-.39-.39-1.03-.39-1.42 0-.39.39-.39 1.02 0 1.41L15.17 12l-4.59 4.59c-.39.39-.39 1.02 0 1.41.39.39 1.03.39 1.42 0l6-6c.39-.39.39-1.02 0-1.41z" />
+                                                    </svg>
+
+
+                                                </div>
+                                            </Link>
+                                            <Link to="/recruitersignup" className={`flex items-center justify-between p-4 border-b border-gray-300`}>
+                                                <div className='flex items-center space-x-4'>
+                                                    <span className='text-xl'>SignUp as Recruiter</span>
                                                 </div>
 
                                                 <div>
