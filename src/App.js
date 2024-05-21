@@ -14,6 +14,8 @@ import AuthState from './context/auth/AuthState';
 import Profile from './components/recruiter/Profile';
 import RecruiterSignUp from './components/loginsingup/RecruiterSignUp';
 import ApplicantSignUp from './components/loginsingup/ApplicantSignUp';
+import MyJobs from './components/recruiter/MyJobs';
+import AllJobs from './components/homepage/AllJobs';
 
 function App() {
   return (
@@ -32,6 +34,8 @@ function App() {
             <Route exact path="/recruiterprofile" element={<Profile/>}></Route>
             <Route exact path="/recruitersignup" element={<RecruiterSignUp/>}></Route>
             <Route exact path="/applicantsignup" element={<ApplicantSignUp/>}></Route>
+            <Route exact path="/myjobs" element={<MyJobs/>}></Route>
+            <Route exact path="/alljobs" element={<AllJobs/>}></Route>
           </Routes>
 
         </Router>

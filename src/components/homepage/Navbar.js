@@ -26,7 +26,7 @@ const Navbar = () => {
 
     let recruiterLink = [
         { name: "Home", link: "/" },
-        { name: "Application", link: "/application" },
+        { name: "All Jobs", link: "/alljobs" },
         { name: "Add Jobs", link: "/addjobs" },
         { name: "My Jobs", link: "/myjobs" },
         { name: "Employees", link: "/emp" },
@@ -35,7 +35,7 @@ const Navbar = () => {
 
     let applicantLink = [
         { name: "Home", link: "/" },
-        { name: "Jobs", link: "/addjobs" },
+        { name: "Jobs", link: "/alljobs" },
         { name: "Profile", link: "/profile" }
     ];
 
