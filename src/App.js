@@ -16,6 +16,7 @@ import RecruiterSignUp from './components/loginsingup/RecruiterSignUp';
 import ApplicantSignUp from './components/loginsingup/ApplicantSignUp';
 import MyJobs from './components/recruiter/MyJobs';
 import AllJobs from './components/homepage/AllJobs';
+import About from './components/homepage/About';
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
 
           <Routes>
             <Route exact path="/" element={<Home />}></Route>
+            <Route exact path="/about" element={<About/>}></Route>
             <Route exact path="/login" element={<Login />}></Route>
             {/* <Route exact path="/signup" element={<Signup />}></Route> */}
             <Route exact path="/addjobs" element={<Addjobs />}></Route>

@@ -16,7 +16,6 @@ const Profile = () => {
             ...profileDetails,
             [key]: value,
         });
-        console.log("key is :  ", key, " Value is :  ", value);
     };
 
     useEffect(() => {

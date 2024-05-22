@@ -77,29 +77,29 @@ const Home = () => {
 
                         <div className='border border-gray-400 relative m-4 p-4 h-56 w-full rounded-xl bg-gradient-to-t from-green-200'>
                             <h2 className='font-semibold text-2xl my-4'>Jobs for Freshers</h2>
-                            <Link to="/alljobs" class="absolute bottom-12 left-4 border border-gray-400 px-1.5 text-sm py-1 rounded-lg bg-green-500 hover:bg-green-600 text-white group transition ease-in-out duration-200">See More <span aria-hidden="true" class="inline-block translate-x-0 group-hover:translate-x-1 transition-transform ease-in-out duration-200">&gt;</span></Link>
+                            <Link to="/" class="absolute bottom-12 left-4 border border-gray-400 px-1.5 text-sm py-1 rounded-lg bg-green-500 hover:bg-green-600 text-white group transition ease-in-out duration-200">See More <span aria-hidden="true" class="inline-block translate-x-0 group-hover:translate-x-1 transition-transform ease-in-out duration-200">&gt;</span></Link>
                             <img src="https://static.vecteezy.com/system/resources/thumbnails/010/872/229/small_2x/3d-job-applicant-illustration-png.png" alt="" className='absolute bottom-0 -right-2 w-52 h-44' />
                         </div>
                         <div className='border border-gray-400 relative m-4 p-4 h-56 w-full rounded-xl bg-gradient-to-t from-red-200'>
                             <h2 className='font-semibold text-2xl my-4'>Work from home Jobs</h2>
-                            <Link to="/alljobs" class="absolute bottom-12 left-4 border border-gray-400 px-1.5 text-sm py-1 rounded-lg bg-red-500 hover:bg-red-600 text-white group transition ease-in-out duration-200">See More <span aria-hidden="true" class="inline-block translate-x-0 group-hover:translate-x-1 transition-transform ease-in-out duration-200">&gt;</span></Link>
+                            <Link to="/" class="absolute bottom-12 left-4 border border-gray-400 px-1.5 text-sm py-1 rounded-lg bg-red-500 hover:bg-red-600 text-white group transition ease-in-out duration-200">See More <span aria-hidden="true" class="inline-block translate-x-0 group-hover:translate-x-1 transition-transform ease-in-out duration-200">&gt;</span></Link>
                             <img src="https://static.vecteezy.com/system/resources/thumbnails/024/222/409/small_2x/male-freelancer-working-from-home-3d-character-illustration-png.png" alt="" className='absolute -bottom-4 right-0 w-48 h-48' />
                         </div>
                     </div>
                     <div className='flex flex-col lg:flex-row items-center'>
                         <div className='border border-gray-400 relative m-4 p-4 h-56 w-full rounded-xl bg-gradient-to-t from-cyan-200'>
                             <h2 className='font-semibold text-2xl my-4'>Work at site Jobs</h2>
-                            <Link to="/alljobs" class="absolute bottom-12 left-4 border border-gray-400 px-1.5 text-sm py-1 rounded-lg bg-cyan-500 hover:bg-cyan-600 text-white group transition ease-in-out duration-200">See More <span aria-hidden="true" class="inline-block translate-x-0 group-hover:translate-x-1 transition-transform ease-in-out duration-200">&gt;</span></Link>
+                            <Link to="/" class="absolute bottom-12 left-4 border border-gray-400 px-1.5 text-sm py-1 rounded-lg bg-cyan-500 hover:bg-cyan-600 text-white group transition ease-in-out duration-200">See More <span aria-hidden="true" class="inline-block translate-x-0 group-hover:translate-x-1 transition-transform ease-in-out duration-200">&gt;</span></Link>
                             <img src="https://static.vecteezy.com/system/resources/previews/032/187/756/non_2x/employees-and-office-workers-cartoon-characters-free-png.png" alt="" className='absolute bottom-4 right-2 w-44 h-36' />
                         </div>
                         <div className='border border-gray-400 relative m-4 p-4 h-56 w-full rounded-xl bg-gradient-to-t from-purple-200'>
                             <h2 className='font-semibold text-2xl my-4'>Part time Jobs</h2>
-                            <Link to="/alljobs" class="absolute bottom-12 left-4 border border-gray-400 px-1.5 text-sm py-1 rounded-lg bg-purple-500 hover:bg-purple-600 text-white group transition ease-in-out duration-200">See More <span aria-hidden="true" class="inline-block translate-x-0 group-hover:translate-x-1 transition-transform ease-in-out duration-200">&gt;</span></Link>
+                            <Link to="/" class="absolute bottom-12 left-4 border border-gray-400 px-1.5 text-sm py-1 rounded-lg bg-purple-500 hover:bg-purple-600 text-white group transition ease-in-out duration-200">See More <span aria-hidden="true" class="inline-block translate-x-0 group-hover:translate-x-1 transition-transform ease-in-out duration-200">&gt;</span></Link>
                             <img src="https://storage.googleapis.com/joblist-content/hero-images/part-time-jobs.jpg" alt="" className='absolute bottom-5 -right-2 mix-blend-darken w-48 h-36' />
                         </div>
                         <div className='border border-gray-400 relative m-4 p-4 h-56 w-full rounded-xl bg-gradient-to-t from-orange-200'>
                             <h2 className='font-semibold text-2xl my-4'>Full time Jobs</h2>
-                            <Link to="/alljobs" class="absolute bottom-12 left-4 border border-gray-400 px-1.5 text-sm py-1 rounded-lg bg-orange-500 hover:bg-orange-600 text-white group transition ease-in-out duration-200">See More <span aria-hidden="true" class="inline-block translate-x-0 group-hover:translate-x-1 transition-transform ease-in-out duration-200">&gt;</span></Link>
+                            <Link to="/" class="absolute bottom-12 left-4 border border-gray-400 px-1.5 text-sm py-1 rounded-lg bg-orange-500 hover:bg-orange-600 text-white group transition ease-in-out duration-200">See More <span aria-hidden="true" class="inline-block translate-x-0 group-hover:translate-x-1 transition-transform ease-in-out duration-200">&gt;</span></Link>
                             <img src="https://static.vecteezy.com/system/resources/previews/019/152/947/non_2x/busy-employees-with-busy-scheludes-finish-work-targets-on-time-man-busy-work-schedule-free-png.png" alt="" className='absolute bottom-4 right-2 w-40 h-36' />
                         </div>
                     </div>
