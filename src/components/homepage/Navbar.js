@@ -25,7 +25,11 @@ const Navbar = () => {
 
   let recruiterLink = [
     { name: "Home", link: "/" },
+
+    { name: "All Jobs", link: "/alljobs" },
+
     { name: "Application", link: "/application" },
+
     { name: "Add Jobs", link: "/addjobs" },
     { name: "My Jobs", link: "/myjobs" },
     { name: "Employees", link: "/emp" },
@@ -34,7 +38,7 @@ const Navbar = () => {
 
   let applicantLink = [
     { name: "Home", link: "/" },
-    { name: "Jobs", link: "/addjobs" },
+    { name: "Jobs", link: "/alljobs" },
     { name: "Profile", link: "/profile" },
   ];
 
@@ -108,7 +112,7 @@ const Navbar = () => {
                     Home
                   </Link>
                   <Link
-                    to="/About"
+                    to="/about"
                     className="lg:ml-4 xl:ml-7 lg:my-0 my-3 list-none relative after:absolute after:bg-blue-500 after:bottom-0 after:left-0 after:h-[2px] after:w-full after:origin-bottom-right after:scale-x-0 lg:hover:after:origin-bottom-left lg:hover:after:scale-x-100 after:transition-transform after:ease-in-out after:duration-300 lg:cursor-pointer"
                   >
                     About
@@ -195,10 +199,7 @@ const Navbar = () => {
                 >
                   Login
                 </Link>
-
-                {/* <Link to="/recruitersignup" className='border px-2 py-1 rounded-lg hover:bg-blue-800'>
-                                        Signup
-                                    </Link> */}
+       
               </div>
             ) : (
               <button
@@ -307,7 +308,7 @@ const Navbar = () => {
                       </div>
                     </Link>
                     <Link
-                      to="/"
+                      to="/about"
                       className={`flex items-center justify-between p-4 border-b border-gray-300`}
                     >
                       <div className="flex items-center space-x-4">
