@@ -4,7 +4,6 @@ import Home from "./components/homepage/Home";
 import Navbar from "./components/homepage/Navbar";
 import ToastAnim from "./libs/ToastAnim";
 import Login from "./components/loginsingup/Login";
-// import Signup from "./components/loginsingup/SignUp";
 import Addjobs from "./components/recruiter/Addjob";
 import Profile from "./components/recruiter/Profile";
 import RecruiterSignUp from "./components/loginsingup/RecruiterSignUp";
@@ -13,6 +12,8 @@ import About from "./components/homepage/About";
 import AuthState from "./context/auth/AuthState";
 import MyJobs from "./components/recruiter/MyJobs";
 import AllJobs from "./components/homepage/AllJobs";
+import Footer from "./components/homepage/Footer";
+
 
 function App() {
   return (
@@ -39,8 +40,12 @@ function App() {
               path="/applicantsignup"
               element={<ApplicantSignUp />}
             ></Route>
+
             <Route exact path="/myjobs" element={<MyJobs />}></Route>
             <Route exact path="/alljobs" element={<AllJobs />}></Route>
+
+            <Route exact path="/footer" element={<Footer />}></Route>
+
           </Routes>
         </Router>
       </AuthState>

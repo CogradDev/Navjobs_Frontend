@@ -25,7 +25,11 @@ const Navbar = () => {
 
   let recruiterLink = [
     { name: "Home", link: "/" },
+
     { name: "All Jobs", link: "/alljobs" },
+
+    { name: "Application", link: "/application" },
+
     { name: "Add Jobs", link: "/addjobs" },
     { name: "My Jobs", link: "/myjobs" },
     { name: "Employees", link: "/emp" },
@@ -195,10 +199,7 @@ const Navbar = () => {
                 >
                   Login
                 </Link>
-
-                {/* <Link to="/recruitersignup" className='border px-2 py-1 rounded-lg hover:bg-blue-800'>
-                                        Signup
-                                    </Link> */}
+       
               </div>
             ) : (
               <button
