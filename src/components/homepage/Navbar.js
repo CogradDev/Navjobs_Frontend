@@ -15,37 +15,29 @@ const Navbar = () => {
   });
 
   const [open, setOpen] = useState(false);
-  const [isCartOpen, setCartOpen] = useState(false);
 
   const getClose = () => {
     if (open) {
       setOpen(false);
-    }
-    if (isCartOpen) {
-      setCartOpen(false);
     }
     document.body.style.overflowY = "auto";
   };
 
   let recruiterLink = [
     { name: "Home", link: "/" },
-
-    { name: "Application", link: "/application" },
-
+    { name: "All Jobs", link: "/alljobs" },
     { name: "Add Jobs", link: "/addjobs" },
     { name: "My Jobs", link: "/myjobs" },
     { name: "Employees", link: "/emp" },
     { name: "Profile", link: "/recruiterprofile" },
-    { name: "Profile", link: "/profile" },
-    { name: "About", link: "/About" },
   ];
 
   let applicantLink = [
     { name: "Home", link: "/" },
-    { name: "Jobs", link: "/addjobs" },
+    { name: "Jobs", link: "/alljobs" },
     { name: "Profile", link: "/profile" },
-    { name: "About", link: "/About" },
   ];
+
   const handleopen = () => {
     setOpen(!open);
     document.body.style.overflowY = "hidden";
@@ -116,7 +108,7 @@ const Navbar = () => {
                     Home
                   </Link>
                   <Link
-                    to="/About"
+                    to="/about"
                     className="lg:ml-4 xl:ml-7 lg:my-0 my-3 list-none relative after:absolute after:bg-blue-500 after:bottom-0 after:left-0 after:h-[2px] after:w-full after:origin-bottom-right after:scale-x-0 lg:hover:after:origin-bottom-left lg:hover:after:scale-x-100 after:transition-transform after:ease-in-out after:duration-300 lg:cursor-pointer"
                   >
                     About
@@ -158,7 +150,6 @@ const Navbar = () => {
                 </div>
               )}
 
-              {/* <svg onClick={() => { setOpen(!open) }} xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" viewBox="0 0 20 20" fill="currentColor"> */}
               <svg
                 onClick={handleopen}
                 xmlns="http://www.w3.org/2000/svg"
@@ -197,21 +188,17 @@ const Navbar = () => {
                     </Link>
                   </div>
                 </div>
+
                 <Link
                   to="/login"
                   className="border px-2 py-1 rounded-lg hover:bg-blue-800"
                 >
                   Login
                 </Link>
-                {/* <Link to="/signup" className='border px-2 py-1 rounded-lg hover:bg-blue-800'>
+
+                {/* <Link to="/recruitersignup" className='border px-2 py-1 rounded-lg hover:bg-blue-800'>
                                         Signup
                                     </Link> */}
-                <Link
-                  to="/recruitersignup"
-                  className="border px-2 py-1 rounded-lg hover:bg-blue-800"
-                >
-                  Signup
-                </Link>
               </div>
             ) : (
               <button
@@ -300,9 +287,8 @@ const Navbar = () => {
                   )
                 ) : (
                   <div>
-                    {/* <Link to="/" className={`flex items-center justify-between p-4 border-b border-gray-300`}> */}
                     <Link
-                      to="/About"
+                      to="/"
                       className={`flex items-center justify-between p-4 border-b border-gray-300`}
                     >
                       <div className="flex items-center space-x-4">
@@ -321,7 +307,7 @@ const Navbar = () => {
                       </div>
                     </Link>
                     <Link
-                      to="/"
+                      to="/about"
                       className={`flex items-center justify-between p-4 border-b border-gray-300`}
                     >
                       <div className="flex items-center space-x-4">

@@ -161,19 +161,19 @@ const Home = () => {
               <div className="flex h-12 w-64 divide-x divide-gray-400 overflow-hidden rounded-lg border border-gray-400 relative">
                 <Link
                   to="/login"
-                  className="flex w-1/3 items-center justify-center text-gray-500 transition duration-100 hover:bg-blue-600 hover:text-white"
+                  className="flex w-1/3 items-center justify-center transition duration-100 hover:bg-blue-600 hover:text-white"
                 >
                   Login
                 </Link>
                 <Link
                   to="/applicantsignup"
-                  className="flex w-1/3 items-center justify-center text-gray-500 transition duration-100 hover:bg-blue-600 hover:text-white"
+                  className="flex w-1/3 items-center justify-center transition duration-100 hover:bg-blue-600 hover:text-white"
                 >
                   Signup
                 </Link>
                 <Link
                   to="/"
-                  className="flex w-1/3 items-center justify-center text-gray-500 transition duration-100 hover:bg-blue-600 hover:text-white"
+                  className="flex w-1/3 items-center justify-center transition duration-100 hover:bg-blue-600 hover:text-white"
                 >
                   About
                 </Link>
@@ -417,47 +417,47 @@ const Home = () => {
         </div>
       </div>
 
-      <div class="bg-white pt-4 sm:pt-10 lg:pt-12">
+      <div class="bg-blue-300 pt-4 sm:pt-10 lg:pt-12">
         <footer class="mx-auto max-w-screen-2xl px-4 md:px-8">
-          <div class="flex flex-col items-center justify-between gap-4 border-t border-blue-400 rounded-md border-b py-6 md:flex-row">
+          <div class="flex flex-col items-center justify-between gap-4 border-t border-blue-600 rounded-md border-b py-6 md:flex-row">
             <nav class="flex flex-wrap justify-center gap-x-4 gap-y-2 md:justify-start md:gap-6">
               <Link
                 to="/"
-                class="text-gray-500 transition duration-100 hover:text-blue-700 hover:scale-105"
+                class="transition duration-100 hover:text-blue-700 hover:scale-105"
               >
                 About
               </Link>
               <Link
                 to="/"
-                class="text-gray-500 transition duration-100 hover:text-blue-700 hover:scale-105"
+                class="transition duration-100 hover:text-blue-700 hover:scale-105"
               >
                 Investor Relations
               </Link>
               <Link
                 to="/"
-                class="text-gray-500 transition duration-100 hover:text-blue-700 hover:scale-105"
+                class="transition duration-100 hover:text-blue-700 hover:scale-105"
               >
                 Jobs
               </Link>
               <Link
                 to="/"
-                class="text-gray-500 transition duration-100 hover:text-blue-700 hover:scale-105"
+                class="transition duration-100 hover:text-blue-700 hover:scale-105"
               >
                 Press
               </Link>
               <Link
                 to="/"
-                class="text-gray-500 transition duration-100 hover:text-blue-700 hover:scale-105"
+                class="transition duration-100 hover:text-blue-700 hover:scale-105"
               >
                 Blog
               </Link>
             </nav>
 
-            <div class="flex gap-4">
+            <div class="flex gap-4 text-gray-700">
               <Link
                 to="/"
                 target="_blank"
-                class="text-gray-400 transition duration-100 hover:text-pink-500 active:text-gray-600"
+                class="transition duration-100 hover:text-pink-500"
               >
                 <svg
                   class="h-5 w-5"
@@ -474,7 +474,7 @@ const Home = () => {
               <Link
                 to="/"
                 target="_blank"
-                class="text-gray-400 transition duration-100 hover:text-blue-500 active:text-gray-600"
+                class="transition duration-100 hover:text-blue-500"
               >
                 <svg
                   class="h-5 w-5"
@@ -491,7 +491,7 @@ const Home = () => {
               <Link
                 to="/"
                 target="_blank"
-                class="text-gray-400 transition duration-100 hover:text-blue-700 active:text-gray-600"
+                class="transition duration-100 hover:text-blue-700"
               >
                 <svg
                   class="h-5 w-5"
@@ -508,7 +508,7 @@ const Home = () => {
               <Link
                 to="/"
                 target="_blank"
-                class="text-gray-400 transition duration-100 hover:text-gray-700 active:text-gray-600"
+                class="transition duration-100 hover:text-gray-700"
               >
                 <svg
                   class="h-5 w-5"
@@ -524,9 +524,8 @@ const Home = () => {
             </div>
           </div>
 
-          <div class="py-8 text-center text-sm text-blue-700">
-            <span className="text-gray-700">©</span> 2024 - NavJobs. All rights
-            reserved.
+          <div class="py-8 text-center text-sm">
+            © 2024 - NavJobs. All rights reserved.
           </div>
         </footer>
       </div>
