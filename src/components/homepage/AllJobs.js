@@ -12,18 +12,31 @@ const JobTile = ({ job }) => {
         setSop('');
     };
 
-    const handleApply = () => {
-        // axios.post(`${apiList.jobs}/${job._id}/applications`, { sop }, {
-        //     headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-        // })
-        // .then((response) => {
-        //     setPopup({ open: true, severity: 'success', message: response.data.message });
-        //     handleClose();
-        // })
-        // .catch((err) => {
-        //     setPopup({ open: true, severity: 'error', message: err.response.data.message });
-        //     handleClose();
-        // });
+    const handleApply = async () => {
+        try {
+            const response = await fetch(apiList.jobs, {
+                method: 'POST',
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('token')}`
+                }
+            });
+
+            const json = await response.json();
+
+            if (json.success) {
+                handleClose();
+                toast.success("Applied Successfully");
+                toast.warn("Need to check this section");
+            }
+            else {
+                toast.warn(json.message);
+                handleClose();
+            }
+        }
+        catch(err){
+            handleClose();
+            toast.warn(err);
+        }
     };
 
     const deadline = new Date(job.deadline).toLocaleDateString();
@@ -330,7 +343,7 @@ const AllJobs = () => {
                         Search
                     </button>
                 </div>
-                <button className="bg-blue-500 text-white text-lg py-1 px-4 rounded-md" onClick={() => {setOpen(true); document.body.style.overflowY = "hidden";}}>
+                <button className="bg-blue-500 text-white text-lg py-1 px-4 rounded-md" onClick={() => { setOpen(true); document.body.style.overflowY = "hidden"; }}>
                     Filter
                 </button>
             </div>
@@ -341,7 +354,7 @@ const AllJobs = () => {
                     <div>No jobs found</div>
                 )}
             </div>
-            <FilterPopup open={open} handleClose={() => {setOpen(false); document.body.style.overflowY = "auto";}} searchOptions={searchOptions} setSearchOptions={setSearchOptions} getData={getData} />
+            <FilterPopup open={open} handleClose={() => { setOpen(false); document.body.style.overflowY = "auto"; }} searchOptions={searchOptions} setSearchOptions={setSearchOptions} getData={getData} />
         </div>
     );
 };
