@@ -4,33 +4,44 @@ import {
   Routes,
   Route
 } from "react-router-dom";
-import Home from './pages/homepage/Home';
-import Navbar from './pages/homepage/Navbar';
+import Home from './components/homepage/Home';
+import Navbar from './components/homepage/Navbar';
 import ToastAnim from './libs/ToastAnim';
-import Login from './pages/loginsingup/Login';
-import Signup from './pages/loginsingup/SignUp';
-import Addjobs from './pages/recruiter/Addjob';
-import ApplicantSignUp from './pages/loginsingup/ApplicantSignUp';
-import RecruiterSignUp from './pages/loginsingup/RecruiterSignUp';
+import Login from './components/loginsingup/Login';
+// import Signup from './components/loginsingup/SignUp';
+import Addjobs from './components/recruiter/Addjob';
+import AuthState from './context/auth/AuthState';
+import Profile from './components/recruiter/Profile';
+import RecruiterSignUp from './components/loginsingup/RecruiterSignUp';
+import ApplicantSignUp from './components/loginsingup/ApplicantSignUp';
+import MyJobs from './components/recruiter/MyJobs';
+import AllJobs from './components/homepage/AllJobs';
+import About from './components/homepage/About';
 
 function App() {
   return (
     <>
-      <Router>
-        <Navbar />
+      <AuthState>
+        <Router>
+          <Navbar />
 
-        <ToastAnim />
+          <ToastAnim />
 
-        <Routes>
-          <Route exact path="/" element={<Home />}></Route>
-          <Route exact path="/login" element={<Login/>}></Route>
-          <Route exact path="/signup" element={<Signup/>}></Route>
-          <Route exact path='/applicant-signup' element ={<ApplicantSignUp/>}></Route>
-          <Route exact path='/recruiter-signup' element ={<RecruiterSignUp/>}></Route>
-          <Route exact path="/addjobs" element={<Addjobs/>}></Route>
-        </Routes>
+          <Routes>
+            <Route exact path="/" element={<Home />}></Route>
+            <Route exact path="/about" element={<About/>}></Route>
+            <Route exact path="/login" element={<Login />}></Route>
+            {/* <Route exact path="/signup" element={<Signup />}></Route> */}
+            <Route exact path="/addjobs" element={<Addjobs />}></Route>
+            <Route exact path="/recruiterprofile" element={<Profile/>}></Route>
+            <Route exact path="/recruitersignup" element={<RecruiterSignUp/>}></Route>
+            <Route exact path="/applicantsignup" element={<ApplicantSignUp/>}></Route>
+            <Route exact path="/myjobs" element={<MyJobs/>}></Route>
+            <Route exact path="/alljobs" element={<AllJobs/>}></Route>
+          </Routes>
 
-      </Router>
+        </Router>
+      </AuthState>
     </>
   );
 }

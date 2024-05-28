@@ -1,11 +1,15 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useContext, useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import loginImg from "../../Images/Login-bro.png"
 import apiList from "../../libs/apiLists";
+import authContext from '../../context/auth/authContext';
 
 const Login = () => {
-  let navigate = useNavigate();
+
+    let navigate = useNavigate();
+    const context = useContext(authContext);
+    const { setIsloggedin, setUserType } = context;
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -53,13 +57,13 @@ const Login = () => {
 
         const json = await response.json();
 
-        if (json.success) {
-          localStorage.setItem("jobportal", json.authtoken);
-
-          toast.success(`Logged in successfully..!`);
-          setIsClicked(false);
-          localStorage.setItem("token", json.token);
-          localStorage.setItem("type", json.type);
+                if (json.success) {
+                    setIsClicked(false);
+                    toast.success(`Logged in successfully..!`);
+                    setIsloggedin(true);
+                    setUserType(json.type);
+                    localStorage.setItem('token', json.token);
+                    localStorage.setItem('type', json.type);
 
           navigate("/");
         } else {
