@@ -1,29 +1,27 @@
-import { useEffect, useState } from "react";
-import apiList from "../../libs/apiLists";
+import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import apiList from "../../libs/apiLists";
+import accountImg from "../Images/Account-rafiki.png";
 
 const Profile = () => {
   const [profileDetails, setProfileDetails] = useState({
     name: "",
     bio: "",
     contactNumber: "",
+    type: "",
+    companyName: "",
+    location: "",
+    industry: "",
+    companyDescription: "",
   });
-  const [isClicked, setIsClicked] = useState(false);
   const [isModalOpen, setModalOpen] = useState(false);
-
-  const handleInput = (key, value) => {
-    setProfileDetails({
-      ...profileDetails,
-      [key]: value,
-    });
-    console.log("key is :  ", key, " Value is :  ", value);
-  };
+  const [isClicked, setIsClicked] = useState(false);
 
   useEffect(() => {
-    getData();
+    fetchData();
   }, []);
 
-  const getData = async () => {
+  const fetchData = async () => {
     try {
       const response = await fetch(apiList.user, {
         method: "GET",
@@ -39,16 +37,20 @@ const Profile = () => {
         toast.error(json.message);
       }
     } catch (err) {
-      toast.error(err.message);
+      toast.error("Failed to fetch user data.");
     }
   };
 
+  const handleInputChange = (key, value) => {
+    setProfileDetails({
+      ...profileDetails,
+      [key]: value,
+    });
+  };
+
   const handleUpdate = async () => {
-    if (
-      profileDetails.contactNumber.length > 13 ||
-      profileDetails.contactNumber.length < 13
-    ) {
-      toast.warn("Enter valid contact number\n+91..........");
+    if (profileDetails.contactNumber.length !== 13) {
+      toast.warn("Enter a valid contact number with +91 prefix.");
       return;
     }
 
@@ -66,7 +68,7 @@ const Profile = () => {
 
       const json = await response.json();
       if (json.success) {
-        getData();
+        fetchData();
         toast.success("Profile updated successfully.");
         setIsClicked(false);
         setModalOpen(false);
@@ -76,122 +78,198 @@ const Profile = () => {
         setModalOpen(false);
       }
     } catch (err) {
-      toast.error(err.message);
+      toast.error("Failed to update profile.");
       setIsClicked(false);
       setModalOpen(false);
     }
   };
 
   return (
-    <div className="flex flex-col items-center p-4 min-h-screen bg-gray-100">
+    <div className="flex flex-col items-center p-4 min-h-screen bg-gray-50">
       <h2 className="text-4xl font-bold my-8">Profile</h2>
-      {isModalOpen ? (
-        <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-2xl">
-          <div className="mb-6">
-            <label
-              htmlFor="name"
-              className="block mb-2 text-sm font-medium text-gray-700"
-            >
-              Name
-            </label>
-            <input
-              id="name"
-              type="text"
-              value={profileDetails.name}
-              onChange={(event) => handleInput("name", event.target.value)}
-              className="appearance-none rounded-md relative block w-full p-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-blue-700 focus:border-blue-700 focus:z-10 sm:text-sm"
-            />
-          </div>
-          <div className="mb-6">
-            <label
-              htmlFor="bio"
-              className="block mb-2 text-sm font-medium text-gray-700"
-            >
-              Bio (upto 250 words)
-            </label>
-            <textarea
-              id="bio"
-              rows="4"
-              value={profileDetails.bio}
-              onChange={(event) => {
-                if (
-                  event.target.value.split(" ").filter(function (n) {
-                    return n !== "";
-                  }).length <= 250
-                ) {
-                  handleInput("bio", event.target.value);
-                }
-              }}
-              className="appearance-none rounded-md relative block w-full p-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-blue-700 focus:border-blue-700 focus:z-10 sm:text-sm"
-            />
-          </div>
-          <div className="mb-6">
-            <label
-              htmlFor="contact"
-              className="block mb-2 text-sm font-medium text-gray-700"
-            >
-              Contact Number
-            </label>
-            <input
-              id="contact"
-              type="tel"
-              value={profileDetails.contactNumber}
-              onChange={(event) =>
-                handleInput("contactNumber", event.target.value)
-              }
-              className="appearance-none rounded-md relative block w-full p-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-blue-700 focus:border-blue-700 focus:z-10 sm:text-sm"
-            />
-          </div>
-          <button
-            onClick={handleUpdate}
-            className={`${
-              isClicked ? "animate-pulse" : "animate-none"
-            } w-full my-6 px-4 py-2 font-medium text-white rounded-lg bg-blue-700 hover:bg-blue-800 focus:outline-none focus:bg-blue-600`}
-          >
-            Update Details
-          </button>
-        </div>
-      ) : (
-        <div className="w-full flex items-center justify-center my-12">
-          <div className="border border-blue-400 shadow-lg shadow-gray-400 rounded-lg  p-4 text-gray-700 w-full lg:w-[70%]">
-            <div className="flex items-center justify-center">
-              <img
-                src="https://static.vecteezy.com/system/resources/thumbnails/019/879/186/small_2x/user-icon-on-transparent-background-free-png.png"
-                alt="Profile"
-                className="w-40 h-24"
-              />
-            </div>
-
-            <div className="text-center text-2xl font-semibold my-2 mb-6">
-              <p>
-                Hello{" "}
-                <span className="text-blue-600">{profileDetails.name}</span>
-              </p>
-            </div>
+      <div className="w-full h-full flex flex-col items-center justify-center">
+        <div className="flex h-full items-start mb-8">
+          <img src={accountImg} alt="Profile" className="w-1/3 object-cover" />
+          <div className="ml-6 border rounded-lg shadow-lg p-6 bg-white flex-1 h-3/4">
             <div>
-              <p className="text-xl font-semibold mb-2">
+              <h3 className="text-xl font-semibold">
+                Hello,{" "}
+                <span className="text-blue-600">{profileDetails.name}</span>
+              </h3>
+              <p className="text-lg text-gray-700 mt-2">
                 Contact Number:{" "}
-                <span className="font-normal">
+                <span className="font-semibold">
                   {profileDetails.contactNumber}
                 </span>
               </p>
-            </div>
-            <div className="">
-              <p className="text-xl font-semibold">
-                Bio: <span className="font-normal">{profileDetails.bio}</span>
+              <p className="text-lg text-gray-700 mt-1">
+                Bio: <span className="font-semibold">{profileDetails.bio}</span>
+              </p>
+              <p className="text-lg text-gray-700 mt-1">
+                Type:{" "}
+                <span className="font-semibold">{profileDetails.type}</span>
+              </p>
+              <p className="text-lg text-gray-700 mt-1">
+                Company Name:{" "}
+                <span className="font-semibold">
+                  {profileDetails.companyName}
+                </span>
+              </p>
+              <p className="text-lg text-gray-700 mt-1">
+                Location:{" "}
+                <span className="font-semibold">{profileDetails.location}</span>
+              </p>
+              <p className="text-lg text-gray-700 mt-1">
+                Industry:{" "}
+                <span className="font-semibold">{profileDetails.industry}</span>
+              </p>
+              <p className="text-lg text-gray-700 mt-1">
+                Company Description:{" "}
+                <span className="font-semibold">
+                  {profileDetails.companyDescription}
+                </span>
               </p>
             </div>
-
-            <div
-              className="text-center my-4"
-              onClick={() => {
-                setModalOpen(true);
-              }}
+            <button
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mt-4 transition duration-300 ease-in-out"
+              onClick={() => setModalOpen(true)}
             >
-              <button className="border border-gray-400 py-1 px-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white">
-                Update Profile
-              </button>
+              Update Profile
+            </button>
+          </div>
+        </div>
+      </div>
+      {isModalOpen && (
+        <div className="fixed inset-0  overflow-y-auto flex items-center justify-center bg-gray-900 bg-opacity-75 z-50">
+          <div className="relative bg-white p-8 rounded-lg shadow-2xl w-full max-w-2xl  mx-4 my-8 h-5/6 overflow-y-auto">
+            <button
+              className="absolute top-3 right-3 text-gray-600 hover:text-gray-800 focus:outline-none"
+              onClick={() => setModalOpen(false)}
+            >
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+            <h3 className="text-3xl font-semibold mb-8 text-center text-gray-800">
+              Update Profile
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-blue-700 mb-2">
+                  Name
+                </label>
+                <input
+                  type="text"
+                  value={profileDetails.name}
+                  onChange={(e) => handleInputChange("name", e.target.value)}
+                  className="input-field w-full border-2 border-gray-400 rounded-lg shadow-sm  p-2"
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-blue-700 mb-2">
+                  Contact Number
+                </label>
+                <input
+                  type="tel"
+                  value={profileDetails.contactNumber}
+                  onChange={(e) =>
+                    handleInputChange("contactNumber", e.target.value)
+                  }
+                  className="input-field w-full border-2 border-gray-400 rounded-lg shadow-sm  p-2"
+                />
+              </div>
+              <div className="mb-4 col-span-2">
+                <label className="block text-sm font-medium text-blue-700 mb-2">
+                  Bio
+                </label>
+                <textarea
+                  rows="4"
+                  value={profileDetails.bio}
+                  onChange={(e) => handleInputChange("bio", e.target.value)}
+                  className="input-field w-full border-2 border-gray-400 rounded-lg shadow-sm  p-2"
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-blue-700 mb-2">
+                  Type
+                </label>
+                <input
+                  type="text"
+                  value={profileDetails.type}
+                  readOnly
+                  className="input-field w-full  border-2 border-gray-400 shadow-xl outline-none rounded-lg   p-2"
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-blue-700 mb-2">
+                  Company Name
+                </label>
+                <input
+                  type="text"
+                  value={profileDetails.companyName}
+                  onChange={(e) =>
+                    handleInputChange("companyName", e.target.value)
+                  }
+                  className="input-field w-full border-2 border-gray-400 rounded-lg shadow-sm  p-2"
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-blue-700 mb-2">
+                  Location
+                </label>
+                <input
+                  type="text"
+                  value={profileDetails.location}
+                  onChange={(e) =>
+                    handleInputChange("location", e.target.value)
+                  }
+                  className="input-field w-full border-2 border-gray-400 rounded-lg shadow-sm  p-2"
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-blue-700 mb-2">
+                  Industry
+                </label>
+                <input
+                  type="text"
+                  value={profileDetails.industry}
+                  onChange={(e) =>
+                    handleInputChange("industry", e.target.value)
+                  }
+                  className="input-field w-full border-2 border-gray-400 rounded-lg shadow-sm  p-2"
+                />
+              </div>
+              <div className="mb-4 col-span-2">
+                <label className="block text-sm font-medium text-blue-700 mb-2">
+                  Company Description
+                </label>
+                <textarea
+                  rows="4"
+                  value={profileDetails.companyDescription}
+                  onChange={(e) =>
+                    handleInputChange("companyDescription", e.target.value)
+                  }
+                  className="input-field w-full border-2 border-gray-400 rounded-lg shadow-sm  p-2"
+                />
+              </div>
             </div>
+            <button
+              className={`w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded transition duration-300 ease-in-out ${
+                isClicked ? "opacity-50 cursor-not-allowed" : ""
+              }`}
+              onClick={handleUpdate}
+              disabled={isClicked}
+            >
+              {isClicked ? "Updating..." : "Update Details"}
+            </button>
           </div>
         </div>
       )}

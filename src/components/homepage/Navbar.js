@@ -1,7 +1,27 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import authContext from "../../context/auth/authContext";
 import { toast } from "react-toastify";
+
+const useClickOutside = (handler) => {
+  const domNode = useRef();
+
+  useEffect(() => {
+    const maybeHandler = (event) => {
+      if (domNode.current && !domNode.current.contains(event.target)) {
+        handler();
+      }
+    };
+
+    document.addEventListener("mousedown", maybeHandler);
+
+    return () => {
+      document.removeEventListener("mousedown", maybeHandler);
+    };
+  }, [handler]);
+
+  return domNode;
+};
 
 const Navbar = () => {
   const context = useContext(authContext);
@@ -15,21 +35,24 @@ const Navbar = () => {
   });
 
   const [open, setOpen] = useState(false);
+  const [isCartOpen, setCartOpen] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const domNode = useClickOutside(() => {
+    setDropdownOpen(false);
+  });
 
   const getClose = () => {
     if (open) {
       setOpen(false);
     }
-    document.body.style.overflowY = "auto";
+    if (isCartOpen) {
+      setCartOpen(false);
+    }
   };
 
   let recruiterLink = [
     { name: "Home", link: "/" },
-
     { name: "All Jobs", link: "/alljobs" },
-
-    { name: "Application", link: "/application" },
-
     { name: "Add Jobs", link: "/addjobs" },
     { name: "My Jobs", link: "/myjobs" },
     { name: "Employees", link: "/emp" },
@@ -172,34 +195,57 @@ const Navbar = () => {
 
           <div className="lg:flex hidden">
             {!islogedin ? (
-              <div className="flex items-center justify-between space-x-10">
-                <div className="group relative flex items-center justify-center lg:ml-4 xl:ml-7 lg:my-0 my-3 lg:cursor-pointer">
-                  <div className="border px-2 py-1 rounded-lg hover:bg-blue-800">
-                    Signup
-                  </div>
-                  <div className="absolute top-8 hidden group-hover:block py-2 text-start w-24 bg-blue-100 text-gray-700 text-sm font-semibold rounded-lg shadow-lg">
-                    <Link
-                      to="/recruitersignup"
-                      className="block p-2 hover:scale-105"
+              <div className="lg:flex hidden">
+                <div className="flex items-center justify-between space-x-10">
+                  <Link
+                    to="/login"
+                    className="border px-2 py-1 rounded-lg hover:bg-blue-800"
+                  >
+                    Login
+                  </Link>
+                  <div ref={domNode} className="relative">
+                    <button
+                      onClick={() => setDropdownOpen(!dropdownOpen)}
+                      className={`flex justify-between items-center border px-2 py-1 rounded-lg hover:bg-blue-800 `}
                     >
-                      As Recruiter
-                    </Link>
-                    <Link
-                      to="/applicantsignup"
-                      className="block p-2 hover:scale-105"
-                    >
-                      As Applicant
-                    </Link>
+                      Signup
+                      <span className="pl-4">
+                        <svg
+                          width={10}
+                          height={10}
+                          viewBox="0 0 20 20"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="fill-current"
+                        >
+                          <path d="M10 14.25C9.8125 14.25 9.65625 14.1875 9.5 14.0625L2.3125 7C2.03125 6.71875 2.03125 6.28125 2.3125 6C2.59375 5.71875 3.03125 5.71875 3.3125 6L10 12.5312L16.6875 5.9375C16.9688 5.65625 17.4063 5.65625 17.6875 5.9375C17.9687 6.21875 17.9687 6.65625 17.6875 6.9375L10.5 14C10.3437 14.1563 10.1875 14.25 10 14.25Z" />
+                        </svg>
+                      </span>
+                    </button>
+                    {dropdownOpen && (
+                      <div
+                        className={`shadow-lg border border-gray-300 dark:border-gray-600 dark:shadow-md  absolute right-0 z-40 mt-2 w-[160px] rounded-md bg-white dark:bg-dark-2 py-[10px] transition-all ${
+                          dropdownOpen
+                            ? "top-full opacity-100 visible"
+                            : "top-[110%] invisible opacity-0"
+                        }`}
+                      >
+                        <a
+                          href="/recruitersignup"
+                          className="font-medium text-blue-600 dark:text-blue-300 hover:bg-gray-200 dark:hover:bg-gray-800 hover:text-blue-800 dark:hover:text-blue-100 block px-5 py-2 text-base"
+                        >
+                          As a Recruiter
+                        </a>
+                        <a
+                          href="/applicantsignup"
+                          className="font-medium text-blue-600 dark:text-blue-300 hover:bg-gray-200 dark:hover:bg-gray-800 hover:text-blue-800 dark:hover:text-blue-100 block px-5 py-2 text-base"
+                        >
+                          As an Applicant
+                        </a>
+                      </div>
+                    )}
                   </div>
                 </div>
-
-                <Link
-                  to="/login"
-                  className="border px-2 py-1 rounded-lg hover:bg-blue-800"
-                >
-                  Login
-                </Link>
-       
               </div>
             ) : (
               <button

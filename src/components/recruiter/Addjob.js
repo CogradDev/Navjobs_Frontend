@@ -3,258 +3,394 @@ import apiList from "../../libs/apiLists";
 import { toast } from "react-toastify";
 
 const Addjobs = () => {
-    const [newSkill, setNewSkill] = useState("");
-    const [isClicked, setIsClicked] = useState(false);
-    const [jobDetails, setJobDetails] = useState({
-        title: "",
-        maxApplicants: 10, // Change to numeric value
-        maxPositions: 2, // Change to numeric value
-        deadline: new Date(new Date().getTime() + 10 * 24 * 60 * 60 * 1000)
+  const [newSkill, setNewSkill] = useState("");
+  const [isClicked, setIsClicked] = useState(false);
+  const [jobDetails, setJobDetails] = useState({
+    title: "",
+    jobType: "Full Time",
+    salary: 5000,
+    jobDescription: "",
+    requiredSkillset: [],
+    duration: 1,
+    applicationDeadline: new Date(
+      new Date().getTime() + 10 * 24 * 60 * 60 * 1000
+    )
+      .toISOString()
+      .substr(0, 16),
+    experienceLevel: "Fresher",
+    educationRequirement: "Graduated",
+    employmentType: "Permanent",
+    maxApplicants: 10,
+    maxPositions: 2,
+  });
+
+  const handleInput = (key, value) => {
+    setJobDetails({
+      ...jobDetails,
+      [key]: value,
+    });
+  };
+
+  const handleSkillInputChange = (event) => {
+    setNewSkill(event.target.value);
+  };
+
+  const handleSkillInputKeyDown = (event) => {
+    if (event.key === "Enter") {
+      const trimmedSkill = newSkill.trim();
+      if (trimmedSkill !== "") {
+        setJobDetails({
+          ...jobDetails,
+          requiredSkillset: [...jobDetails.requiredSkillset, trimmedSkill],
+        });
+        setNewSkill(""); // Clear input after adding skill
+      }
+    }
+  };
+
+  const removeSkill = (indexToRemove) => {
+    setJobDetails({
+      ...jobDetails,
+      requiredSkillset: jobDetails.requiredSkillset.filter(
+        (_, index) => index !== indexToRemove
+      ),
+    });
+  };
+
+  const handleUpdate = async () => {
+    setIsClicked(true);
+    if (
+      !jobDetails.title ||
+      !jobDetails.jobType ||
+      !jobDetails.jobDescription
+    ) {
+      toast.warn("Title, job type, and description are required.");
+      setIsClicked(false);
+      return;
+    }
+
+    try {
+      const response = await fetch(apiList.jobs, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(jobDetails),
+      });
+
+      const json = await response.json();
+      if (json.success) {
+        toast.success(json.message);
+        setIsClicked(false);
+        // Reset form after successful submission
+        setJobDetails({
+          title: "",
+          jobType: "Full Time",
+          salary: 0,
+          jobDescription: "",
+          requiredSkillset: [],
+          duration: 1,
+          applicationDeadline: new Date(
+            new Date().getTime() + 10 * 24 * 60 * 60 * 1000
+          )
             .toISOString()
             .substr(0, 16),
-        skillsets: [],
-        jobType: "Full Time",
-        duration: 0, // Change to numeric value
-        salary: 5000, // Change to numeric value
-    });
-
-    const handleInput = (key, value) => {
-        setJobDetails({
-            ...jobDetails,
-            [key]: value,
+          experienceLevel: "Fresher",
+          educationRequirement: "Graduated",
+          employmentType: "Permanent",
+          maxApplicants: 10,
+          maxPositions: 2,
         });
-    };
+      } else {
+        toast.warn(json.message);
+        setIsClicked(false);
+      }
+    } catch (err) {
+      setIsClicked(false);
+      toast.error("Some Error occurred.");
+    }
+  };
 
-    const handleSkillInputChange = (event) => {
-        setNewSkill(event.target.value);
-    };
-
-    const handleSkillInputKeyDown = (event) => {
-        if (event.key === "Enter") {
-            const trimmedSkill = newSkill.trim();
-            if (trimmedSkill !== "") {
-                setJobDetails({
-                    ...jobDetails,
-                    skillsets: [...jobDetails.skillsets, trimmedSkill],
-                });
-                setNewSkill(""); // Clear input after adding skill
-            }
-        }
-    };
-
-    const removeSkill = (indexToRemove) => {
-        setJobDetails({
-            ...jobDetails,
-            skillsets: jobDetails.skillsets.filter((_, index) => index !== indexToRemove),
-        });
-    };
-
-    const handleUpdate = async () => {
-        setIsClicked(true);
-        if (!jobDetails.title || !jobDetails.jobType) {
-            toast.warn("Title and job type are required.");
-            setIsClicked(false);
-            return;
-        }
-
-        try {
-            const response = await fetch(apiList.jobs, {
-                method: "POST",
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem("token")}`,
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(jobDetails),
-            });
-
-            const json = await response.json();
-            if (json.success) {
-                toast.success(json.message);
-                setIsClicked(false);
-                // Reset form after successful submission
-                setJobDetails({
-                    title: "",
-                    maxApplicants: 0,
-                    maxPositions: 0,
-                    deadline: new Date(
-                        new Date().getTime() + 10 * 24 * 60 * 60 * 1000
-                    ).toISOString(),
-                    skillsets: [],
-                    jobType: "Full Time",
-                    duration: 0,
-                    salary: 0,
-                });
-            } else {
-                toast.warn(json.message);
-                setIsClicked(false);
-            }
-        } catch (err) {
-            setIsClicked(false);
-            toast.error("Some Error occurred.");
-        }
-    };
-
-    return (
-        <div className="flex items-center justify-center min-h-screen bg-gray-100 p-4">
-            <div className="w-full max-w-md p-6 bg-white rounded-md shadow-md my-8">
-                <h2 className="text-2xl font-bold mb-4">Add Job</h2>
-                <div className="space-y-2">
-                    <div>
-                        <label htmlFor="title" className="block ml-1">
-                            Job Title
-                        </label>
-                        <input
-                            id="title"
-                            type="text"
-                            placeholder="Enter the title of the job"
-                            value={jobDetails.title}
-                            onChange={(event) => handleInput("title", event.target.value)}
-                            className="appearance-none rounded-md relative block w-full p-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-blue-700 focus:border-blue-700 focus:z-10 sm:text-sm"
-                        />
-                    </div>
-
-                    <div className="relative">
-                        <label htmlFor="skill" className="block ml-1">
-                            Skills
-                        </label>
-                        <input
-                            type="text"
-                            id="skill"
-                            placeholder="Enter the desire skill sets"
-                            value={newSkill}
-                            onChange={handleSkillInputChange}
-                            onKeyDown={handleSkillInputKeyDown}
-                            className="appearance-none rounded-md relative block w-full p-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-blue-700 focus:border-blue-700 focus:z-10 sm:text-sm"
-                        />
-                        <div className="absolute inset-y-0 -bottom-20 pointer-events-none left-1 flex items-center text-sm">
-                            Press enter to add skills
-                        </div>
-                    </div>
-
-                    <div className="flex space-x-3 flex-wrap pt-3">
-                        {jobDetails.skillsets.map((skill, idx) => {
-                            return (
-                                <div
-                                    key={idx}
-                                    className="border border-gray-500 px-2 rounded-l-full rounded-r-full m-1 relative"
-                                >
-                                    <div className="pointer-events-none">{skill}</div>
-                                    <div className="absolute -top-2 -right-1 bg-gray-500 text-white rounded-full h-4 w-4 flex items-center justify-center cursor-pointer text-[0.6rem]" onClick={() => removeSkill(idx)}>X</div>
-                                </div>
-                            );
-                        })}
-                    </div>
-
-                    <div>
-                        <label htmlFor="jobtype" className="block ml-1">
-                            Job Type
-                        </label>
-                        <select
-                            id="jobtype"
-                            value={jobDetails.jobType}
-                            onChange={(event) => handleInput("jobType", event.target.value)}
-                            className="rounded-md relative block w-full p-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-blue-700 focus:border-blue-700 focus:z-10 sm:text-sm"
-                        >
-                            <option value="Full Time">Full Time</option>
-                            <option value="Part Time">Part Time</option>
-                            <option value="Work From Home">Work From Home</option>
-                        </select>
-                    </div>
-
-                    <div>
-                        <label htmlFor="jobduration" className="block ml-1">
-                            Job Duration
-                        </label>
-                        <select
-                            id="jobduration"
-                            value={jobDetails.duration}
-                            onChange={(event) =>
-                                handleInput("duration", parseInt(event.target.value))
-                            }
-                            className="rounded-md relative block w-full p-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-blue-700 focus:border-blue-700 focus:z-10 sm:text-sm"
-                        >
-                            <option value="0">Flexible</option>
-                            <option value="1">1 Month</option>
-                            <option value="2">2 Months</option>
-                            <option value="3">3 Months</option>
-                            <option value="4">4 Months</option>
-                            <option value="5">5 Months</option>
-                            <option value="6">6 Months</option>
-                        </select>
-                    </div>
-
-                    <div>
-                        <label htmlFor="salary" className="block ml-1">
-                            Job Salary
-                        </label>
-                        <input
-                            id="salary"
-                            type="number"
-                            placeholder="Enter the salary"
-                            value={jobDetails.salary}
-                            onChange={(event) =>
-                                handleInput("salary", parseInt(event.target.value))
-                            }
-                            className="appearance-none rounded-md relative block w-full p-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-blue-700 focus:border-blue-700 focus:z-10 sm:text-sm"
-                        />
-                    </div>
-
-                    <div>
-                        <label htmlFor="deadline" className="block ml-1">
-                            Form filling deadline
-                        </label>
-                        <input
-                            id="deadline"
-                            type="datetime-local"
-                            placeholder="Application Deadline"
-                            value={jobDetails.deadline}
-                            onChange={(event) => handleInput("deadline", event.target.value)}
-                            className="appearance-none rounded-md relative block w-full p-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-blue-700 focus:border-blue-700 focus:z-10 sm:text-sm"
-                        />
-                    </div>
-
-                    <div>
-                        <label htmlFor="maxapplicant" className="block ml-1">
-                            Max number of applicant
-                        </label>
-                        <input
-                            id="maxapplicant"
-                            type="number"
-                            placeholder="Maximum Number Of Applicants"
-                            value={jobDetails.maxApplicants}
-                            onChange={(event) =>
-                                handleInput("maxApplicants", parseInt(event.target.value))
-                            }
-                            className="appearance-none rounded-md relative block w-full p-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-blue-700 focus:border-blue-700 focus:z-10 sm:text-sm"
-                        />
-                    </div>
-
-                    <div>
-                        <label htmlFor="maxpos" className="block ml-1">
-                            Max number of Available Position
-                        </label>
-                        <input
-                            type="number"
-                            id="maxpos"
-                            placeholder="Number of Position Available"
-                            value={jobDetails.maxPositions}
-                            onChange={(event) =>
-                                handleInput("maxPositions", parseInt(event.target.value))
-                            }
-                            className="appearance-none rounded-md relative block w-full p-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-blue-700 focus:border-blue-700 focus:z-10 sm:text-sm"
-                        />
-                    </div>
-
-                    <button
-                        className={`${isClicked ? "animate-pulse" : "animate-none"} w-full my-6 px-4 py-2 font-medium text-white rounded-lg bg-blue-700 hover:bg-blue-800 focus:outline-none focus:bg-blue-600`}
-                        onClick={() => handleUpdate()}
-                    >
-                        Add Job
-                    </button>
-                </div>
+  return (
+    <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-blue-100 to-purple-200 p-6">
+      <div className="w-full max-w-4xl p-8 bg-white rounded-lg shadow-lg">
+        <h2 className="text-3xl font-bold mb-6 text-center text-blue-800">
+          Add New Job
+        </h2>
+        <div className="space-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label
+                htmlFor="title"
+                className="block text-sm font-medium text-gray-700 mb-1"
+              >
+                Job Title
+              </label>
+              <input
+                id="title"
+                type="text"
+                placeholder="Enter the title of the job"
+                value={jobDetails.title}
+                onChange={(event) => handleInput("title", event.target.value)}
+                className="w-full px-3 py-2 border rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
             </div>
+
+            <div>
+              <label
+                htmlFor="jobType"
+                className="block text-sm font-medium text-gray-700 mb-1"
+              >
+                Job Type
+              </label>
+              <select
+                id="jobType"
+                value={jobDetails.jobType}
+                onChange={(event) => handleInput("jobType", event.target.value)}
+                className="w-full px-3 py-2 border rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              >
+                <option value="Full Time">Full Time</option>
+                <option value="Part Time">Part Time</option>
+                <option value="Remote">Remote</option>
+              </select>
+            </div>
+
+            <div>
+              <label
+                htmlFor="salary"
+                className="block text-sm font-medium text-gray-700 mb-1"
+              >
+                Salary
+              </label>
+              <input
+                id="salary"
+                type="number"
+                placeholder="Enter the salary"
+                value={jobDetails.salary}
+                onChange={(event) =>
+                  handleInput("salary", parseInt(event.target.value))
+                }
+                className="w-full px-3 py-2 border rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
+            </div>
+
+            <div>
+              <label
+                htmlFor="duration"
+                className="block text-sm font-medium text-gray-700 mb-1"
+              >
+                Duration (Months)
+              </label>
+              <select
+                id="duration"
+                value={jobDetails.duration}
+                onChange={(event) =>
+                  handleInput("duration", parseInt(event.target.value))
+                }
+                className="w-full px-3 py-2 border rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              >
+                {[...Array(13).keys()].map((month) => (
+                  <option key={month} value={month}>
+                    {month === 0 ? "Flexible" : month}
+                  </option>
+                ))}
+                <option value="12">12 months or more</option>
+              </select>
+            </div>
+
+            <div>
+              <label
+                htmlFor="applicationDeadline"
+                className="block text-sm font-medium text-gray-700 mb-1"
+              >
+                Application Deadline
+              </label>
+              <input
+                id="applicationDeadline"
+                type="datetime-local"
+                value={jobDetails.applicationDeadline}
+                onChange={(event) =>
+                  handleInput("applicationDeadline", event.target.value)
+                }
+                className="w-full px-3 py-2 border rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
+            </div>
+
+            <div>
+              <label
+                htmlFor="experienceLevel"
+                className="block text-sm font-medium text-gray-700 mb-1"
+              >
+                Experience Level
+              </label>
+              <select
+                id="experienceLevel"
+                value={jobDetails.experienceLevel}
+                onChange={(event) =>
+                  handleInput("experienceLevel", event.target.value)
+                }
+                className="w-full px-3 py-2 border rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              >
+                <option value="Fresher">Fresher</option>
+                <option value="Mid Level">Mid Level</option>
+                <option value="Senior Level">Senior Level</option>
+                <option value="Experienced">Experienced</option>
+              </select>
+            </div>
+
+            <div>
+              <label
+                htmlFor="educationRequirement"
+                className="block text-sm font-medium text-gray-700 mb-1"
+              >
+                Education Requirement
+              </label>
+              <select
+                id="educationRequirement"
+                value={jobDetails.educationRequirement}
+                onChange={(event) =>
+                  handleInput("educationRequirement", event.target.value)
+                }
+                className="w-full px-3 py-2 border rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              >
+                <option value="Matric Pass">Matric Pass</option>
+                <option value="Diploma">Diploma</option>
+                <option value="Graduated">Graduated</option>
+                <option value="Post Graduated">Post Graduated</option>
+              </select>
+            </div>
+
+            <div>
+              <label
+                htmlFor="employmentType"
+                className="block text-sm font-medium text-gray-700 mb-1"
+              >
+                Employment Type
+              </label>
+              <select
+                id="employmentType"
+                value={jobDetails.employmentType}
+                onChange={(event) =>
+                  handleInput("employmentType", event.target.value)
+                }
+                className="w-full px-3 py-2 border rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              >
+                <option value="Permanent">Permanent</option>
+                <option value="Contract">Contract</option>
+                <option value="Internship">Internship</option>
+              </select>
+            </div>
+            <div>
+              <label
+                htmlFor="maxApplicants"
+                className="block text-sm font-medium text-gray-700 mb-1"
+              >
+                Max Number of Applicants
+              </label>
+              <input
+                id="maxApplicants"
+                type="number"
+                placeholder="Maximum Number Of Applicants"
+                value={jobDetails.maxApplicants}
+                onChange={(event) =>
+                  handleInput("maxApplicants", parseInt(event.target.value))
+                }
+                className="w-full px-3 py-2 border rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
+            </div>
+
+            <div>
+              <label
+                htmlFor="maxPositions"
+                className="block text-sm font-medium text-gray-700 mb-1"
+              >
+                Max Number of Available Positions
+              </label>
+              <input
+                type="number"
+                id="maxPositions"
+                placeholder="Number of Positions Available"
+                value={jobDetails.maxPositions}
+                onChange={(event) =>
+                  handleInput("maxPositions", parseInt(event.target.value))
+                }
+                className="w-full px-3 py-2 border rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
+            </div>
+          </div>
+
+          <div className="relative">
+            <label
+              htmlFor="skill"
+              className="block text-sm font-medium text-gray-700 mb-1"
+            >
+              Required Skillset
+            </label>
+            <input
+              type="text"
+              id="skill"
+              placeholder="Enter the desired skill sets"
+              value={newSkill}
+              onChange={handleSkillInputChange}
+              onKeyDown={handleSkillInputKeyDown}
+              className="w-full px-3 py-2 border rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            />
+            <div className="absolute inset-y-0 right-0 flex items-center pr-3 text-sm text-gray-500">
+              Press Enter to add
+            </div>
+          </div>
+
+          <div className="flex flex-wrap gap-2 pt-2">
+            {jobDetails.requiredSkillset.map((skill, idx) => (
+              <div
+                key={idx}
+                className="flex items-center px-3 py-1 bg-blue-200 text-blue-700 rounded-full"
+              >
+                {skill}
+                <button
+                  type="button"
+                  className="ml-2 text-blue-700 hover:text-red-500"
+                  onClick={() => removeSkill(idx)}
+                >
+                  &times;
+                </button>
+              </div>
+            ))}
+          </div>
+
+          <div>
+            <label
+              htmlFor="jobDescription"
+              className="block text-sm font-medium text-gray-700 mb-1"
+            >
+              Job Description
+            </label>
+            <textarea
+              id="jobDescription"
+              placeholder="Enter the job description, links, and other details"
+              value={jobDetails.jobDescription}
+              onChange={(event) =>
+                handleInput("jobDescription", event.target.value)
+              }
+              className="w-full px-3 py-2 border rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              rows="5"
+            />
+          </div>
+
+          <button
+            className={`${
+              isClicked ? "animate-pulse" : ""
+            } w-full my-6 px-4 py-2 font-semibold text-white bg-gradient-to-r from-blue-700 to-purple-700 rounded-lg hover:from-blue-800 hover:to-purple-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500`}
+            onClick={handleUpdate}
+            disabled={isClicked}
+          >
+            {isClicked ? "Submitting..." : "Add Job"}
+          </button>
         </div>
-    );
+      </div>
+    </div>
+  );
 };
 
 export default Addjobs;
