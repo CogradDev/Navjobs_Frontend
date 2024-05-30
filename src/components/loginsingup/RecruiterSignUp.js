@@ -1,10 +1,10 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
-import { Link, useNavigate } from "react-router-dom";
 import apiList from "../../libs/apiLists";
+import recruiterBGImage from "../Images/People search-rafiki.png";
 
 const RecruiterSignUp = () => {
-  let navigate = useNavigate();
   const [signupDetails, setSignupDetails] = useState({
     type: "recruiter",
     uName: "",
@@ -18,7 +18,6 @@ const RecruiterSignUp = () => {
 
   const [showPassword, setShowPassword] = useState(false);
   const [isOTPSend, setIsOTPSend] = useState(false);
-  const [isClicked, setIsClicked] = useState(false);
 
   const handleChange = (key, value) => {
     setSignupDetails({
@@ -58,7 +57,6 @@ const RecruiterSignUp = () => {
 
   const sendOTP = async () => {
     if (!validateForm()) return;
-    setIsClicked(true);
     try {
       const response = await fetch(apiList.sendotp, {
         method: "POST",
@@ -74,21 +72,18 @@ const RecruiterSignUp = () => {
 
       if (json.success) {
         setIsOTPSend(true);
-        setIsClicked(false);
         toast.success("OTP sent successfully");
       } else {
         toast.error(json.message || "Error sending OTP");
-        setIsClicked(false);
       }
     } catch (err) {
-      setIsClicked(false);
+      console.error("Error sending OTP:", err);
       toast.error("Failed to send OTP");
     }
   };
 
   const handleSignup = async () => {
     if (!validateForm()) return;
-    setIsClicked(true);
 
     try {
       const response = await fetch(apiList.verifyotp, {
@@ -127,17 +122,12 @@ const RecruiterSignUp = () => {
           toast.success(
             `Recruiter account created for ${signupDetails.uEmail}`
           );
-          setIsClicked(false);
-          localStorage.setItem("token", signupJson.token);
-          localStorage.setItem("type", signupJson.type);
-          navigate("/");
+          // Redirect or handle success as needed
         } else {
           toast.error(signupJson.message || "Error signing up recruiter");
-          setIsClicked(false);
         }
       } else {
         toast.error(json.message || "Error verifying OTP");
-        setIsClicked(false);
       }
     } catch (err) {
       console.error("Error signing up recruiter:", err);
@@ -341,10 +331,9 @@ const RecruiterSignUp = () => {
                 <button
                   type="button"
                   className={`${
-                    isClicked ? "animate-pulse" : "animate-none"
+                    isOTPSend ? "animate-pulse" : "animate-none"
                   } group relative w-full flex justify-center items-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 space-x-2`}
                   onClick={isOTPSend ? handleSignup : sendOTP}
-                  disabled={isClicked}
                 >
                   {isOTPSend
                     ? "Verify OTP and Create Account"
@@ -357,7 +346,7 @@ const RecruiterSignUp = () => {
 
         <div className="w-1/2 hidden lg:block">
           <img
-            src="https://static.vecteezy.com/system/resources/previews/010/872/476/non_2x/3d-online-recruitment-illustration-png.png"
+            src={recruiterBGImage}
             alt="Sign Up"
             className="w-full h-full object-contain rounded-l-xl"
           />

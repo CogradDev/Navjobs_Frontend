@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
+import applicantBGImage from "../Images/Resume folder-bro.png";
 import apiList from "../../libs/apiLists";
 
 const ApplicantSignUp = () => {
-  let navigate = useNavigate();
   const [signupDetails, setSignupDetails] = useState({
     type: "applicant",
     uName: "",
@@ -21,7 +21,7 @@ const ApplicantSignUp = () => {
 
   const [showPassword, setShowPassword] = useState(false);
   const [isOTPSend, setIsOTPSend] = useState(false);
-  const [isClicked, setIsClicked] = useState(false);
+  // const [isClicked, setIsClicked] = useState(false);
 
   const handleChange = (key, value) => {
     if (key === "resume" || key === "profile") {
@@ -72,7 +72,6 @@ const ApplicantSignUp = () => {
 
   const sendOTP = async () => {
     if (!validateForm()) return;
-    setIsClicked(true);
     try {
       const response = await fetch(apiList.sendotp, {
         method: "POST",
@@ -89,13 +88,11 @@ const ApplicantSignUp = () => {
       if (json.success) {
         setIsOTPSend(true);
         toast.success("OTP sent successfully");
-        setIsClicked(false);
       } else {
         toast.error(json.message || "Error sending OTP");
-        setIsClicked(false);
       }
     } catch (err) {
-      setIsClicked(false);
+      console.error("Error sending OTP:", err);
       toast.error("Failed to send OTP");
     }
   };
@@ -121,14 +118,12 @@ const ApplicantSignUp = () => {
       return response;
     } catch (err) {
       console.error("Error signing up applicant:", err);
-      setIsClicked(false);
       throw new Error("Internal Server Error");
     }
   };
 
   const handleSignup = async () => {
     if (!validateForm()) return;
-    setIsClicked(true);
 
     try {
       const otpVerificationResponse = await fetch(apiList.verifyotp, {
@@ -150,21 +145,15 @@ const ApplicantSignUp = () => {
           toast.success(
             `Applicant account created for ${signupDetails.uEmail}`
           );
-          setIsClicked(false);
-          localStorage.setItem("token", json.token);
-          localStorage.setItem("type", json.type);
-          navigate("/");
+          // Redirect or handle success as needed
         } else {
           toast.error(json.message || "Error signing up applicant");
-          setIsClicked(false);
         }
       } else {
-        setIsClicked(false);
         toast.warn("OTP verification failed. Please enter the correct OTP.");
       }
     } catch (err) {
       console.error("Error signing up applicant:", err);
-      setIsClicked(false);
       toast.error("Internal Server Error");
     }
   };
@@ -175,7 +164,7 @@ const ApplicantSignUp = () => {
         <div className="w-1/2 hidden lg:block">
           <img
             //src="https://source.unsplash.com/random/800x600"
-            src="https://static.vecteezy.com/system/resources/previews/002/466/865/non_2x/business-people-candidate-recruitment-illustration-free-vector.jpg"
+            src={applicantBGImage}
             alt="Sign Up"
             className="w-full h-full object-contain rounded-l-xl"
           />
@@ -369,10 +358,9 @@ const ApplicantSignUp = () => {
                 <button
                   type="button"
                   className={`${
-                    isClicked ? "animate-pulse" : "animate-none"
+                    isOTPSend ? "animate-pulse" : "animate-none"
                   } group relative w-full flex justify-center items-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-700 space-x-2`}
                   onClick={isOTPSend ? handleSignup : sendOTP}
-                  disabled={isClicked}
                 >
                   {isOTPSend
                     ? "Verify OTP and Create Account"
