@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import apiList from "../../libs/apiLists";
 import accountImg from "../../Images/Account-rafiki.png";
 
-const Profile = () => {
+const RecruiterProfile = () => {
   const [profileDetails, setProfileDetails] = useState({
     name: "",
     bio: "",
@@ -277,4 +277,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default RecruiterProfile;

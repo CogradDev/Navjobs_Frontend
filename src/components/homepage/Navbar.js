@@ -67,7 +67,7 @@ const Navbar = () => {
   let applicantLink = [
     { name: "Home", link: "/" },
     { name: "Jobs", link: "/alljobs" },
-    { name: "Profile", link: "/profile" },
+    { name: "Profile", link: "/applicantprofile" },
   ];
 
   const handleopen = () => {

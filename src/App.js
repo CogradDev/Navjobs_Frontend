@@ -11,7 +11,8 @@ import Login from './components/loginsingup/Login';
 // import Signup from './components/loginsingup/SignUp';
 import Addjobs from './components/recruiter/Addjob';
 import AuthState from './context/auth/AuthState';
-import Profile from './components/recruiter/Profile';
+import RecruiterProfile from './components/recruiter/RecruiterProfile';
+import ApplicantProfile from './components/applicant/ApplicantProfile';
 import RecruiterSignUp from './components/loginsingup/RecruiterSignUp';
 import ApplicantSignUp from './components/loginsingup/ApplicantSignUp';
 import MyJobs from './components/recruiter/MyJobs';
@@ -33,7 +34,8 @@ function App() {
             <Route exact path="/login" element={<Login />}></Route>
             {/* <Route exact path="/signup" element={<Signup />}></Route> */}
             <Route exact path="/addjobs" element={<Addjobs />}></Route>
-            <Route exact path="/recruiterprofile" element={<Profile/>}></Route>
+            <Route exact path="/recruiterprofile" element={<RecruiterProfile/>}></Route>
+            <Route exact path="/applicantprofile" element={<ApplicantProfile/>}></Route>
             <Route exact path="/recruitersignup" element={<RecruiterSignUp/>}></Route>
             <Route exact path="/applicantsignup" element={<ApplicantSignUp/>}></Route>
             <Route exact path="/myjobs" element={<MyJobs/>}></Route>
