@@ -5,7 +5,8 @@ import Navbar from "./components/homepage/Navbar";
 import ToastAnim from "./libs/ToastAnim";
 import Login from "./components/loginsingup/Login";
 import Addjobs from "./components/recruiter/Addjob";
-import Profile from "./components/recruiter/Profile";
+import ApplicantProfile from "./components/applicant/ApplicantProfile";
+import RecruiterProfile from "./components/recruiter/RecruiterProfile";
 import RecruiterSignUp from "./components/loginsingup/RecruiterSignUp";
 import ApplicantSignUp from "./components/loginsingup/ApplicantSignUp";
 import About from "./components/homepage/About";
@@ -29,7 +30,8 @@ function App() {
             <Route exact path="/login" element={<Login />}></Route>
             <Route exact path="/About" element={<About />}></Route>
             <Route exact path="/addjobs" element={<Addjobs />}></Route>
-            <Route exact path="/recruiterprofile" element={<Profile />}></Route>
+            <Route exact path="/recruiterprofile" element={<RecruiterProfile />}></Route>
+            <Route exact path="/applicantprofile" element={<ApplicantProfile />}></Route>
             <Route
               exact
               path="/recruitersignup"

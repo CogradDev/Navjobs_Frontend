@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import Job from "../Images/job.png"
 
 const Home = () => {
   const sliderDet = [
@@ -184,8 +185,8 @@ const Home = () => {
                   to="/About"
                   className="flex w-1/3 items-center justify-center text-gray-500 transition duration-100 hover:bg-blue-600 hover:text-white"
 
-                  to="/"
-                  className="flex w-1/3 items-center justify-center transition duration-100 hover:bg-blue-600 hover:text-white"
+                  // to="/"
+                  // className="flex w-1/3 items-center justify-center transition duration-100 hover:bg-blue-600 hover:text-white"
 
                 >
                   About

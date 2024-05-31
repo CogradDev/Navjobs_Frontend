@@ -7,7 +7,7 @@ const Addjobs = () => {
   const [isClicked, setIsClicked] = useState(false);
   const [jobDetails, setJobDetails] = useState({
     title: "",
-    jobType: "Full Time",
+    jobType: "Full-time",
     salary: 5000,
     jobDescription: "",
     requiredSkillset: [],
@@ -86,7 +86,7 @@ const Addjobs = () => {
         // Reset form after successful submission
         setJobDetails({
           title: "",
-          jobType: "Full Time",
+          jobType: "Full-time",
           salary: 0,
           jobDescription: "",
           requiredSkillset: [],
@@ -150,8 +150,8 @@ const Addjobs = () => {
                 onChange={(event) => handleInput("jobType", event.target.value)}
                 className="w-full px-3 py-2 border rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               >
-                <option value="Full Time">Full Time</option>
-                <option value="Part Time">Part Time</option>
+                <option value="Full-time">Full Time</option>
+                <option value="Part-time">Part Time</option>
                 <option value="Remote">Remote</option>
               </select>
             </div>
