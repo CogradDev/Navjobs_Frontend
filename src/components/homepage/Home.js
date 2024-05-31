@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Job from "../Images/job.png"
+import Job from "../Images/job.png";
 
 const Home = () => {
   const sliderDet = [
@@ -173,7 +173,6 @@ const Home = () => {
                   Signup
                 </Link>
                 <Link
-
                   // to="/"
                   // className="flex w-1/3 items-center justify-center transition duration-100 hover:bg-blue-600 hover:text-white"
                   to="/recruitersignup"
@@ -187,7 +186,6 @@ const Home = () => {
 
                   // to="/"
                   // className="flex w-1/3 items-center justify-center transition duration-100 hover:bg-blue-600 hover:text-white"
-
                 >
                   About
                 </Link>
@@ -413,7 +411,6 @@ const Home = () => {
       </div>
 
       <div class="bg-blue-300 pt-4 sm:pt-10 lg:pt-12">
-
         <section class="text-gray-600 body-font">
           <div class="container px-5 py-24 mx-auto flex flex-wrap">
             <div class="flex flex-wrap -mx-4 mt-auto mb-auto lg:w-1/2 sm:w-2/3 content-start sm:pr-10">
@@ -571,7 +568,6 @@ const Home = () => {
             © 2024 - NavJobs. All rights reserved.
           </div>
         </footer>
-
       </div>
     </>
   );
