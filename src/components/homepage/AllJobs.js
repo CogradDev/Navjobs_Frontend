@@ -122,29 +122,33 @@ const JobDetailsPane = ({ job }) => {
     setSop("");
   };
 
+  
   const handleApply = async () => {
     try {
-      const response = await fetch(apiList.jobs, {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
+        const response = await fetch(`${apiList.jobs}/${job._id}/applications`, {
+            method: "POST",
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ sop })
+        });
 
-      const json = await response.json();
+        const json = await response.json();
 
-      if (json.success) {
-        handleClose();
-        toast.success("Applied Successfully");
-      } else {
-        toast.warn(json.message);
-        handleClose();
-      }
+        if (response.ok) {
+            handleClose();
+            toast.success("Applied Successfully");
+        } else {
+            toast.warn(json.message || "Application failed");
+            handleClose();
+        }
     } catch (err) {
-      handleClose();
-      toast.error("Error occurred while applying.");
+        handleClose();
+        toast.error("Error occurred while applying.");
     }
-  };
+};
+
 
   const deadline = new Date(job.applicationDeadline).toLocaleDateString();
 
