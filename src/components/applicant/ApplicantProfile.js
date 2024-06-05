@@ -74,7 +74,7 @@ const ApplicantProfile = () => {
       formData.append("profile", profileDetails.profile);
     }
 
-    console.log(formData)
+    console.log(formData);
     try {
       const response = await fetch(apiList.user, {
         method: "PUT",
@@ -165,33 +165,39 @@ const ApplicantProfile = () => {
 
   return (
     <div className="flex flex-col p-4 min-h-screen bg-gray-50">
-      <h2 className="text-4xl font-bold my-8 text-left ml-8">Profile</h2>
-      <div className="w-full h-full flex flex-col items-center justify-center">
-        <div className="flex h-full items-start mb-8">
-          <img src={accountImg} alt="Profile" className="w-1/3 object-cover" />
-          <div className="ml-6 border rounded-lg shadow-lg p-6 bg-white flex-1 h-3/4 relative">
-            <div className="absolute -top-20 left-1/2 transform -translate-x-1/2 w-40 h-40 rounded-full overflow-hidden border-4 border-white shadow-lg">
+      <div className="flex flex-col items-center justify-center">
+        <h2 className="text-2xl md:text-4xl font-bold my-4 md:my-8 text-center">
+          Profile
+        </h2>
+        <div className="flex flex-col md:flex-row items-center mb-8">
+          <img
+            src={accountImg}
+            alt="Profile"
+            className="w-full md:w-1/3 object-cover mb-4 md:mb-0"
+          />
+          <div className="ml-0 md:ml-6 border rounded-lg shadow-lg p-6 bg-white flex-1 relative">
+            <div className="absolute -top-16 left-1/2 transform -translate-x-1/2 w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden border-4 border-white shadow-lg">
               <img
                 src={profileUrl || userPhoto}
                 alt="Profile Photo"
                 className="w-full h-full object-cover"
               />
             </div>
-            <div className="mt-20">
-              <h3 className="text-xl font-semibold">
+            <div className="mt-16 md:mt-0">
+              <h3 className="text-lg md:text-xl font-semibold">
                 Hello,{" "}
                 <span className="text-blue-600">{profileDetails.name}</span>
               </h3>
-              <p className="text-lg text-gray-700 mt-2">
+              <p className="text-sm md:text-lg text-gray-700 mt-2">
                 Contact Number:{" "}
                 <span className="font-semibold">
                   {profileDetails.contactNumber}
                 </span>
               </p>
-              <p className="text-lg text-gray-700 mt-1">
+              <p className="text-sm md:text-lg text-gray-700 mt-1">
                 Bio: <span className="font-semibold">{profileDetails.bio}</span>
               </p>
-              <p className="text-lg text-gray-700 mt-1">
+              <p className="text-sm md:text-lg text-gray-700 mt-1">
                 Resume:{" "}
                 <a
                   href={resumeUrl}
@@ -202,16 +208,16 @@ const ApplicantProfile = () => {
                   View Resume
                 </a>
               </p>
-              <p className="text-lg text-gray-700 mt-1">
+              <p className="text-sm md:text-lg text-gray-700 mt-1">
                 Skills:{" "}
                 <span className="font-semibold">
                   {profileDetails.skills.join(", ")}
                 </span>
               </p>
-              <div className="text-lg text-gray-700 mt-1">
+              <div className="text-sm md:text-lg text-gray-700 mt-1">
                 Education:
                 {profileDetails.education.map((edu, index) => (
-                  <div key={index} className="mt-2">
+                  <div key={index} className="mt-1">
                     <span className="font-semibold">
                       {edu.institutionName} (
                       {new Date(edu.startDate).getFullYear()} -{" "}
@@ -222,7 +228,7 @@ const ApplicantProfile = () => {
               </div>
             </div>
             <button
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mt-4 transition duration-300 ease-in-out"
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mt-4 md:mt-8 transition duration-300 ease-in-out"
               onClick={() => setModalOpen(true)}
             >
               Update Profile
@@ -230,6 +236,7 @@ const ApplicantProfile = () => {
           </div>
         </div>
       </div>
+
       {isModalOpen && (
         <div className="fixed inset-0 overflow-y-auto flex items-center justify-center bg-gray-900 bg-opacity-75 z-50">
           <div className="relative bg-white p-8 rounded-lg shadow-2xl w-full max-w-2xl mx-4 my-8 h-5/6 overflow-y-auto">
@@ -253,7 +260,7 @@ const ApplicantProfile = () => {
               Update Profile
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-              <div className="mb-4">
+              <div className="mb-4 col-span-2">
                 <label className="block text-sm font-medium text-blue-700 mb-2">
                   Name
                 </label>
@@ -264,7 +271,7 @@ const ApplicantProfile = () => {
                   className="input-field w-full border-2 border-gray-400 rounded-lg shadow-sm p-2"
                 />
               </div>
-              <div className="mb-4">
+              <div className="mb-4 col-span-2">
                 <label className="block text-sm font-medium text-blue-700 mb-2">
                   Contact Number
                 </label>
@@ -288,7 +295,7 @@ const ApplicantProfile = () => {
                   className="input-field w-full border-2 border-gray-400 rounded-lg shadow-sm p-2"
                 />
               </div>
-              <div className="mb-4">
+              <div className="mb-4 col-span-2">
                 <label className="block text-sm font-medium text-blue-700 mb-2">
                   Resume
                 </label>
@@ -304,7 +311,7 @@ const ApplicantProfile = () => {
                   Max size: 2MB (.pdf, .doc, .docx)
                 </p>
               </div>
-              <div className="mb-4">
+              <div className="mb-4 col-span-2">
                 <label className="block text-sm font-medium text-blue-700 mb-2">
                   Profile Photo
                 </label>
@@ -359,9 +366,9 @@ const ApplicantProfile = () => {
                       }
                       className="input-field w-full border-2 border-gray-400 rounded-lg shadow-sm p-2 mb-2"
                     />
-                    <div className="flex gap-4">
+                    <div className="flex flex-col md:flex-row gap-4">
                       <input
-                        type="datetime-local"
+                        type="date"
                         placeholder="Start Date"
                         value={edu.startDate}
                         onChange={(e) =>
@@ -371,10 +378,10 @@ const ApplicantProfile = () => {
                             e.target.value
                           )
                         }
-                        className="input-field w-full border-2 border-gray-400 rounded-lg shadow-sm p-2 mb-2"
+                        className="input-field w-full md:w-1/2 border-2 border-gray-400 rounded-lg shadow-sm p-2 mb-2"
                       />
                       <input
-                        type="datetime-local"
+                        type="date"
                         placeholder="End Date"
                         value={edu.endDate}
                         onChange={(e) =>
@@ -384,7 +391,7 @@ const ApplicantProfile = () => {
                             e.target.value
                           )
                         }
-                        className="input-field w-full border-2 border-gray-400 rounded-lg shadow-sm p-2 mb-2"
+                        className="input-field w-full md:w-1/2 border-2 border-gray-400 rounded-lg shadow-sm p-2 mb-2"
                       />
                     </div>
                   </div>

@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import authContext from "../../context/auth/authContext";
 import { toast } from "react-toastify";
+import profilePic from "../Images/user.png";
 
 const useClickOutside = (handler) => {
   const domNode = useRef();
@@ -25,14 +26,22 @@ const useClickOutside = (handler) => {
 
 const Navbar = () => {
   const context = useContext(authContext);
-  const { islogedin, userType, setIsloggedin, setUserType } = context;
+  const {
+    islogedin,
+    userType,
+    setIsloggedin,
+    setUserType,
+    userData,
+    setUserData,
+  } = context;
 
   const navigate = useNavigate();
 
   useEffect(() => {
     setIsloggedin(localStorage.getItem("token"));
     setUserType(localStorage.getItem("type"));
-  });
+    setUserData(JSON.parse(localStorage.getItem("user")));
+  }, []);
 
   const [open, setOpen] = useState(false);
   const [isCartOpen, setCartOpen] = useState(false);
@@ -52,7 +61,7 @@ const Navbar = () => {
 
   let recruiterLink = [
     { name: "Home", link: "/" },
-    { name: "All Jobs", link: "/alljobs" },
+    { name: "Jobs", link: "/alljobs" },
     { name: "Add Jobs", link: "/addjobs" },
     { name: "My Jobs", link: "/myjobs" },
     { name: "Employees", link: "/emp" },
@@ -71,10 +80,24 @@ const Navbar = () => {
   };
 
   const handleLogout = () => {
+
+
     localStorage.removeItem("type");
     localStorage.removeItem("token");
+    localStorage.setItem(
+      "user",
+      JSON.stringify({
+        profilePhoto: profilePic,
+        username: "Guest",
+      })
+    );
+
     setIsloggedin(localStorage.getItem("token"));
     setUserType(localStorage.getItem("type"));
+    setUserData({
+      profilePhoto: profilePic,
+      username: "Guest",
+    });
     toast.success("Logged out successfully");
     navigate("/");
   };
@@ -82,6 +105,8 @@ const Navbar = () => {
   return (
     <>
       <section className="bg-blue-700 text-gray-200 sticky top-0 left-0 w-full z-50 p-4">
+        {/* Laptop View */}
+
         <div className={`lg:flex items-center justify-between lg:px-3`}>
           <div className="flex items-center justify-center text-lg">
             <Link
@@ -133,6 +158,12 @@ const Navbar = () => {
                     className="lg:ml-4 xl:ml-7 lg:my-0 my-3 list-none relative after:absolute after:bg-blue-500 after:bottom-0 after:left-0 after:h-[2px] after:w-full after:origin-bottom-right after:scale-x-0 lg:hover:after:origin-bottom-left lg:hover:after:scale-x-100 after:transition-transform after:ease-in-out after:duration-300 lg:cursor-pointer"
                   >
                     Home
+                  </Link>
+                  <Link
+                    to="/alljobs"
+                    className="lg:ml-4 xl:ml-7 lg:my-0 my-3 list-none relative after:absolute after:bg-blue-500 after:bottom-0 after:left-0 after:h-[2px] after:w-full after:origin-bottom-right after:scale-x-0 lg:hover:after:origin-bottom-left lg:hover:after:scale-x-100 after:transition-transform after:ease-in-out after:duration-300 lg:cursor-pointer"
+                  >
+                    Jobs
                   </Link>
                   <Link
                     to="/about"
@@ -258,54 +289,54 @@ const Navbar = () => {
           </div>
         </div>
 
+        {/* Mobile View */}
         <div
           className={`fixed top-0 right-0 w-full h-full transform ${
-            open ? "-translate-x-0" : "-translate-x-full"
-          } transition-transform duration-200 ease-in-out flex backdrop-blur-[1.5px] text-gray-700`}
+            open ? "translate-x-0" : "translate-x-full"
+          } transition-transform duration-300 ease-in-out flex backdrop-blur-md text-gray-700 z-50`}
         >
-          <div className="bg-gray-100 w-[80%] overflow-y-auto">
+          <div className="bg-white shadow-2xl w-[80%] md:w-[60%] lg:w-[30%] overflow-y-auto">
             <Link
-              to="/userlogin"
+              to="/login"
               onClick={getClose}
-              className="flex items-center justify-between bg-blue-500 z-20 p-6 sticky top-0 left-0"
+              className="flex items-center justify-between bg-blue-700 text-white p-6 sticky top-0 left-0"
             >
-              <div className="flex items-center justify-center space-x-2">
+              <div className="flex items-center space-x-3">
                 <img
-                  src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
-                  alt=""
-                  className="w-10 h-10"
+                  src={userData.profilePhoto}
+                  alt="User Avatar"
+                  className="w-10 h-10 rounded-full"
                 />
-                <h2 className="text-2xl font-semibold w-full">Guest User</h2>
+                <h2 className="text-2xl font-semibold">{userData.username}</h2>
               </div>
             </Link>
 
-            <div>
-              <div
-                onClick={getClose}
-                className="flex flex-col justify-center font-medium bg-gray-100"
-              >
+            <div className="p-6">
+              <div className="flex flex-col space-y-4">
                 {islogedin ? (
                   userType === "recruiter" ? (
                     recruiterLink.map((myLink, index) => (
                       <Link
                         key={index}
                         to={myLink.link}
-                        className={`flex items-center justify-between p-4 border-b border-gray-300`}
+                        onClick={getClose}
+                        className="flex items-center justify-between p-4 bg-gray-100 rounded-lg hover:bg-gray-200 transition-all duration-200 ease-in-out"
                       >
-                        <div className="flex items-center space-x-4">
-                          <span className="text-xl">{myLink.name}</span>
-                        </div>
-
-                        <div>
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 24 24"
-                            width="24"
-                            height="24"
-                          >
-                            <path d="M18.59 13.41l-6-6c-.39-.39-1.03-.39-1.42 0-.39.39-.39 1.02 0 1.41L15.17 12l-4.59 4.59c-.39.39-.39 1.02 0 1.41.39.39 1.03.39 1.42 0l6-6c.39-.39.39-1.02 0-1.41z" />
-                          </svg>
-                        </div>
+                        <span className="text-lg font-medium">
+                          {myLink.name}
+                        </span>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 24 24"
+                          width="24"
+                          height="24"
+                          className="text-gray-600"
+                        >
+                          <path
+                            fill="currentColor"
+                            d="M18.59 13.41l-6-6c-.39-.39-1.03-.39-1.42 0-.39.39-.39 1.02 0 1.41L15.17 12l-4.59 4.59c-.39.39-.39 1.02 0 1.41.39.39 1.03.39 1.42 0l6-6c.39-.39.39-1.02 0-1.41z"
+                          />
+                        </svg>
                       </Link>
                     ))
                   ) : (
@@ -313,110 +344,139 @@ const Navbar = () => {
                       <Link
                         key={index}
                         to={myLink.link}
-                        className={`flex items-center justify-between p-4 border-b border-gray-300`}
+                        onClick={getClose}
+                        className="flex items-center justify-between p-4 bg-gray-100 rounded-lg hover:bg-gray-200 transition-all duration-200 ease-in-out"
                       >
-                        <div className="flex items-center space-x-4">
-                          <span className="text-xl">{myLink.name}</span>
-                        </div>
-
-                        <div>
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 24 24"
-                            width="24"
-                            height="24"
-                          >
-                            <path d="M18.59 13.41l-6-6c-.39-.39-1.03-.39-1.42 0-.39.39-.39 1.02 0 1.41L15.17 12l-4.59 4.59c-.39.39-.39 1.02 0 1.41.39.39 1.03.39 1.42 0l6-6c.39-.39.39-1.02 0-1.41z" />
-                          </svg>
-                        </div>
+                        <span className="text-lg font-medium">
+                          {myLink.name}
+                        </span>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 24 24"
+                          width="24"
+                          height="24"
+                          className="text-gray-600"
+                        >
+                          <path
+                            fill="currentColor"
+                            d="M18.59 13.41l-6-6c-.39-.39-1.03-.39-1.42 0-.39.39-.39 1.02 0 1.41L15.17 12l-4.59 4.59c-.39.39-.39 1.02 0 1.41.39.39 1.03.39 1.42 0l6-6c.39-.39.39-1.02 0-1.41z"
+                          />
+                        </svg>
                       </Link>
                     ))
                   )
                 ) : (
-                  <div>
+                  <>
                     <Link
                       to="/"
-                      className={`flex items-center justify-between p-4 border-b border-gray-300`}
+                      onClick={getClose}
+                      className="flex items-center justify-between p-4 bg-gray-100 rounded-lg hover:bg-gray-200 transition-all duration-200 ease-in-out"
                     >
-                      <div className="flex items-center space-x-4">
-                        <span className="text-xl">Home</span>
-                      </div>
+                      <span className="text-lg font-medium">Home</span>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        width="24"
+                        height="24"
+                        className="text-gray-600"
+                      >
+                        <path
+                          fill="currentColor"
+                          d="M18.59 13.41l-6-6c-.39-.39-1.03-.39-1.42 0-.39.39-.39 1.02 0 1.41L15.17 12l-4.59 4.59c-.39.39-.39 1.02 0 1.41.39.39 1.03.39 1.42 0l6-6c.39-.39.39-1.02 0-1.41z"
+                        />
+                      </svg>
+                    </Link>
 
-                      <div>
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 24 24"
-                          width="24"
-                          height="24"
-                        >
-                          <path d="M18.59 13.41l-6-6c-.39-.39-1.03-.39-1.42 0-.39.39-.39 1.02 0 1.41L15.17 12l-4.59 4.59c-.39.39-.39 1.02 0 1.41.39.39 1.03.39 1.42 0l6-6c.39-.39.39-1.02 0-1.41z" />
-                        </svg>
-                      </div>
+                    <Link
+                      to="/alljobs"
+                      onClick={getClose}
+                      className="flex items-center justify-between p-4 bg-gray-100 rounded-lg hover:bg-gray-200 transition-all duration-200 ease-in-out"
+                    >
+                      <span className="text-lg font-medium">Jobs</span>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        width="24"
+                        height="24"
+                        className="text-gray-600"
+                      >
+                        <path
+                          fill="currentColor"
+                          d="M18.59 13.41l-6-6c-.39-.39-1.03-.39-1.42 0-.39.39-.39 1.02 0 1.41L15.17 12l-4.59 4.59c-.39.39-.39 1.02 0 1.41.39.39 1.03.39 1.42 0l6-6c.39-.39.39-1.02 0-1.41z"
+                        />
+                      </svg>
                     </Link>
                     <Link
                       to="/about"
-                      className={`flex items-center justify-between p-4 border-b border-gray-300`}
+                      onClick={getClose}
+                      className="flex items-center justify-between p-4 bg-gray-100 rounded-lg hover:bg-gray-200 transition-all duration-200 ease-in-out"
                     >
-                      <div className="flex items-center space-x-4">
-                        <span className="text-xl">About</span>
-                      </div>
-
-                      <div>
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 24 24"
-                          width="24"
-                          height="24"
-                        >
-                          <path d="M18.59 13.41l-6-6c-.39-.39-1.03-.39-1.42 0-.39.39-.39 1.02 0 1.41L15.17 12l-4.59 4.59c-.39.39-.39 1.02 0 1.41.39.39 1.03.39 1.42 0l6-6c.39-.39.39-1.02 0-1.41z" />
-                        </svg>
-                      </div>
+                      <span className="text-lg font-medium">About</span>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        width="24"
+                        height="24"
+                        className="text-gray-600"
+                      >
+                        <path
+                          fill="currentColor"
+                          d="M18.59 13.41l-6-6c-.39-.39-1.03-.39-1.42 0-.39.39-.39 1.02 0 1.41L15.17 12l-4.59 4.59c-.39.39-.39 1.02 0 1.41.39.39 1.03.39 1.42 0l6-6c.39-.39.39-1.02 0-1.41z"
+                        />
+                      </svg>
                     </Link>
                     <Link
                       to="/applicantsignup"
-                      className={`flex items-center justify-between p-4 border-b border-gray-300`}
+                      onClick={getClose}
+                      className="flex items-center justify-between p-4 bg-gray-100 rounded-lg hover:bg-gray-200 transition-all duration-200 ease-in-out"
                     >
-                      <div className="flex items-center space-x-4">
-                        <span className="text-xl">SignUp as Applicant</span>
-                      </div>
-
-                      <div>
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 24 24"
-                          width="24"
-                          height="24"
-                        >
-                          <path d="M18.59 13.41l-6-6c-.39-.39-1.03-.39-1.42 0-.39.39-.39 1.02 0 1.41L15.17 12l-4.59 4.59c-.39.39-.39 1.02 0 1.41.39.39 1.03.39 1.42 0l6-6c.39-.39.39-1.02 0-1.41z" />
-                        </svg>
-                      </div>
+                      <span className="text-lg font-medium">
+                        SignUp as Applicant
+                      </span>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        width="24"
+                        height="24"
+                        className="text-gray-600"
+                      >
+                        <path
+                          fill="currentColor"
+                          d="M18.59 13.41l-6-6c-.39-.39-1.03-.39-1.42 0-.39.39-.39 1.02 0 1.41L15.17 12l-4.59 4.59c-.39.39-.39 1.02 0 1.41.39.39 1.03.39 1.42 0l6-6c.39-.39.39-1.02 0-1.41z"
+                        />
+                      </svg>
                     </Link>
                     <Link
                       to="/recruitersignup"
-                      className={`flex items-center justify-between p-4 border-b border-gray-300`}
+                      onClick={getClose}
+                      className="flex items-center justify-between p-4 bg-gray-100 rounded-lg hover:bg-gray-200 transition-all duration-200 ease-in-out"
                     >
-                      <div className="flex items-center space-x-4">
-                        <span className="text-xl">SignUp as Recruiter</span>
-                      </div>
-
-                      <div>
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 24 24"
-                          width="24"
-                          height="24"
-                        >
-                          <path d="M18.59 13.41l-6-6c-.39-.39-1.03-.39-1.42 0-.39.39-.39 1.02 0 1.41L15.17 12l-4.59 4.59c-.39.39-.39 1.02 0 1.41.39.39 1.03.39 1.42 0l6-6c.39-.39.39-1.02 0-1.41z" />
-                        </svg>
-                      </div>
+                      <span className="text-lg font-medium">
+                        SignUp as Recruiter
+                      </span>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        width="24"
+                        height="24"
+                        className="text-gray-600"
+                      >
+                        <path
+                          fill="currentColor"
+                          d="M18.59 13.41l-6-6c-.39-.39-1.03-.39-1.42 0-.39.39-.39 1.02 0 1.41L15.17 12l-4.59 4.59c-.39.39-.39 1.02 0 1.41.39.39 1.03.39 1.42 0l6-6c.39-.39.39-1.02 0-1.41z"
+                        />
+                      </svg>
                     </Link>
-                  </div>
+                  </>
                 )}
               </div>
             </div>
           </div>
 
-          <div className="h-full w-[20%]" onClick={getClose}></div>
+          <div
+            className="h-full w-[20%] bg-gray-900 opacity-50"
+            onClick={getClose}
+          ></div>
         </div>
       </section>
     </>

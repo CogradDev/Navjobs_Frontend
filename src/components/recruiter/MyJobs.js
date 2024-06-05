@@ -809,7 +809,7 @@ const MyJobs = () => {
     const queryString = searchParams.join("&");
     try {
       const response = await fetch(
-        `${apiList.jobs}${queryString ? `?${queryString}` : ""}`,
+        `${apiList.recruiterJobs}${queryString ? `?${queryString}` : ""}`,
         {
           method: "GET",
           headers: {
@@ -818,7 +818,7 @@ const MyJobs = () => {
           },
         }
       );
-
+       console.log(response)
       const json = await response.json();
       if (json.success) {
         setJobs(json.data);

@@ -86,52 +86,39 @@ const RecruiterProfile = () => {
 
   return (
     <div className="flex flex-col items-center p-4 min-h-screen bg-gray-50">
-      <h2 className="text-4xl font-bold my-8">Profile</h2>
-      <div className="w-full h-full flex flex-col items-center justify-center">
-        <div className="flex h-full items-start mb-8">
-          <img src={accountImg} alt="Profile" className="w-1/3 object-cover" />
-          <div className="ml-6 border rounded-lg shadow-lg p-6 bg-white flex-1 h-3/4">
+      <h2 className="text-2xl md:text-4xl font-bold my-8">Profile</h2>
+      <div className="w-full flex flex-col items-center justify-center">
+        <div className="flex flex-col md:flex-row items-start mb-8 space-y-4 md:space-y-0 md:space-x-6 w-full max-w-4xl">
+          <img src={accountImg} alt="Profile" className="w-full md:w-1/3 object-cover" />
+          <div className="border rounded-lg shadow-lg p-4 md:p-6 bg-white w-full md:flex-1">
             <div>
-              <h3 className="text-xl font-semibold">
-                Hello,{" "}
-                <span className="text-blue-600">{profileDetails.name}</span>
+              <h3 className="text-lg md:text-xl font-semibold">
+                Hello, <span className="text-blue-600">{profileDetails.name}</span>
               </h3>
-              <p className="text-lg text-gray-700 mt-2">
-                Contact Number:{" "}
-                <span className="font-semibold">
-                  {profileDetails.contactNumber}
-                </span>
+              <p className="text-sm md:text-lg text-gray-700 mt-2">
+                Contact Number: <span className="font-semibold">{profileDetails.contactNumber}</span>
               </p>
-              <p className="text-lg text-gray-700 mt-1">
+              <p className="text-sm md:text-lg text-gray-700 mt-1">
                 Bio: <span className="font-semibold">{profileDetails.bio}</span>
               </p>
-              <p className="text-lg text-gray-700 mt-1">
-                Type:{" "}
-                <span className="font-semibold">{profileDetails.type}</span>
+              <p className="text-sm md:text-lg text-gray-700 mt-1">
+                Type: <span className="font-semibold">{profileDetails.type}</span>
               </p>
-              <p className="text-lg text-gray-700 mt-1">
-                Company Name:{" "}
-                <span className="font-semibold">
-                  {profileDetails.companyName}
-                </span>
+              <p className="text-sm md:text-lg text-gray-700 mt-1">
+                Company Name: <span className="font-semibold">{profileDetails.companyName}</span>
               </p>
-              <p className="text-lg text-gray-700 mt-1">
-                Location:{" "}
-                <span className="font-semibold">{profileDetails.location}</span>
+              <p className="text-sm md:text-lg text-gray-700 mt-1">
+                Location: <span className="font-semibold">{profileDetails.location}</span>
               </p>
-              <p className="text-lg text-gray-700 mt-1">
-                Industry:{" "}
-                <span className="font-semibold">{profileDetails.industry}</span>
+              <p className="text-sm md:text-lg text-gray-700 mt-1">
+                Industry: <span className="font-semibold">{profileDetails.industry}</span>
               </p>
-              <p className="text-lg text-gray-700 mt-1">
-                Company Description:{" "}
-                <span className="font-semibold">
-                  {profileDetails.companyDescription}
-                </span>
+              <p className="text-sm md:text-lg text-gray-700 mt-1">
+                Company Description: <span className="font-semibold">{profileDetails.companyDescription}</span>
               </p>
             </div>
             <button
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mt-4 transition duration-300 ease-in-out"
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mt-4 transition duration-300 ease-in-out w-full md:w-auto"
               onClick={() => setModalOpen(true)}
             >
               Update Profile
@@ -140,8 +127,8 @@ const RecruiterProfile = () => {
         </div>
       </div>
       {isModalOpen && (
-        <div className="fixed inset-0  overflow-y-auto flex items-center justify-center bg-gray-900 bg-opacity-75 z-50">
-          <div className="relative bg-white p-8 rounded-lg shadow-2xl w-full max-w-2xl  mx-4 my-8 h-5/6 overflow-y-auto">
+        <div className="fixed inset-0 overflow-y-auto flex items-center justify-center bg-gray-900 bg-opacity-75 z-50 p-4 md:p-8">
+          <div className="relative bg-white p-4 md:p-8 rounded-lg shadow-2xl w-full max-w-lg md:max-w-2xl mx-4 my-8 mt-6 overflow-y-auto h-5/6">
             <button
               className="absolute top-3 right-3 text-gray-600 hover:text-gray-800 focus:outline-none"
               onClick={() => setModalOpen(false)}
@@ -158,106 +145,80 @@ const RecruiterProfile = () => {
                 <path d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
-            <h3 className="text-3xl font-semibold mb-8 text-center text-gray-800">
+            <h3 className="text-xl md:text-3xl font-semibold mb-4 md:mb-8 text-center text-gray-800">
               Update Profile
             </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 mb-4 md:mb-6">
               <div className="mb-4">
-                <label className="block text-sm font-medium text-blue-700 mb-2">
-                  Name
-                </label>
+                <label className="block text-sm font-medium text-blue-700 mb-2">Name</label>
                 <input
                   type="text"
                   value={profileDetails.name}
                   onChange={(e) => handleInputChange("name", e.target.value)}
-                  className="input-field w-full border-2 border-gray-400 rounded-lg shadow-sm  p-2"
+                  className="input-field w-full border-2 border-gray-400 rounded-lg shadow-sm p-2"
                 />
               </div>
               <div className="mb-4">
-                <label className="block text-sm font-medium text-blue-700 mb-2">
-                  Contact Number
-                </label>
+                <label className="block text-sm font-medium text-blue-700 mb-2">Contact Number</label>
                 <input
                   type="tel"
                   value={profileDetails.contactNumber}
-                  onChange={(e) =>
-                    handleInputChange("contactNumber", e.target.value)
-                  }
-                  className="input-field w-full border-2 border-gray-400 rounded-lg shadow-sm  p-2"
+                  onChange={(e) => handleInputChange("contactNumber", e.target.value)}
+                  className="input-field w-full border-2 border-gray-400 rounded-lg shadow-sm p-2"
                 />
               </div>
-              <div className="mb-4 col-span-2">
-                <label className="block text-sm font-medium text-blue-700 mb-2">
-                  Bio
-                </label>
+              <div className="mb-4 md:col-span-2">
+                <label className="block text-sm font-medium text-blue-700 mb-2">Bio</label>
                 <textarea
                   rows="4"
                   value={profileDetails.bio}
                   onChange={(e) => handleInputChange("bio", e.target.value)}
-                  className="input-field w-full border-2 border-gray-400 rounded-lg shadow-sm  p-2"
+                  className="input-field w-full border-2 border-gray-400 rounded-lg shadow-sm p-2"
                 />
               </div>
               <div className="mb-4">
-                <label className="block text-sm font-medium text-blue-700 mb-2">
-                  Type
-                </label>
+                <label className="block text-sm font-medium text-blue-700 mb-2">Type</label>
                 <input
                   type="text"
                   value={profileDetails.type}
                   readOnly
-                  className="input-field w-full  border-2 border-gray-400 shadow-xl outline-none rounded-lg   p-2"
+                  className="input-field w-full border-2 border-gray-400 shadow-xl outline-none rounded-lg p-2"
                 />
               </div>
               <div className="mb-4">
-                <label className="block text-sm font-medium text-blue-700 mb-2">
-                  Company Name
-                </label>
+                <label className="block text-sm font-medium text-blue-700 mb-2">Company Name</label>
                 <input
                   type="text"
                   value={profileDetails.companyName}
-                  onChange={(e) =>
-                    handleInputChange("companyName", e.target.value)
-                  }
-                  className="input-field w-full border-2 border-gray-400 rounded-lg shadow-sm  p-2"
+                  onChange={(e) => handleInputChange("companyName", e.target.value)}
+                  className="input-field w-full border-2 border-gray-400 rounded-lg shadow-sm p-2"
                 />
               </div>
               <div className="mb-4">
-                <label className="block text-sm font-medium text-blue-700 mb-2">
-                  Location
-                </label>
+                <label className="block text-sm font-medium text-blue-700 mb-2">Location</label>
                 <input
                   type="text"
                   value={profileDetails.location}
-                  onChange={(e) =>
-                    handleInputChange("location", e.target.value)
-                  }
-                  className="input-field w-full border-2 border-gray-400 rounded-lg shadow-sm  p-2"
+                  onChange={(e) => handleInputChange("location", e.target.value)}
+                  className="input-field w-full border-2 border-gray-400 rounded-lg shadow-sm p-2"
                 />
               </div>
               <div className="mb-4">
-                <label className="block text-sm font-medium text-blue-700 mb-2">
-                  Industry
-                </label>
+                <label className="block text-sm font-medium text-blue-700 mb-2">Industry</label>
                 <input
                   type="text"
                   value={profileDetails.industry}
-                  onChange={(e) =>
-                    handleInputChange("industry", e.target.value)
-                  }
-                  className="input-field w-full border-2 border-gray-400 rounded-lg shadow-sm  p-2"
+                  onChange={(e) => handleInputChange("industry", e.target.value)}
+                  className="input-field w-full border-2 border-gray-400 rounded-lg shadow-sm p-2"
                 />
               </div>
-              <div className="mb-4 col-span-2">
-                <label className="block text-sm font-medium text-blue-700 mb-2">
-                  Company Description
-                </label>
+              <div className="mb-4 md:col-span-2">
+                <label className="block text-sm font-medium text-blue-700 mb-2">Company Description</label>
                 <textarea
                   rows="4"
                   value={profileDetails.companyDescription}
-                  onChange={(e) =>
-                    handleInputChange("companyDescription", e.target.value)
-                  }
-                  className="input-field w-full border-2 border-gray-400 rounded-lg shadow-sm  p-2"
+                  onChange={(e) => handleInputChange("companyDescription", e.target.value)}
+                  className="input-field w-full border-2 border-gray-400 rounded-lg shadow-sm p-2"
                 />
               </div>
             </div>

@@ -168,14 +168,14 @@ const JobDetailsPane = ({ job }) => {
       const emailReplaced = line.replace(
         emailRegex,
         (match) =>
-          `<a href="mailto:${match}" class="text-blue-700 underline">${match}</a>`
+          `<a href="mailto:${match}" className="text-blue-700 underline">${match}</a>`
       );
 
       // Replace URLs with a styled span
       const urlReplaced = emailReplaced.replace(
         urlRegex,
         (match) =>
-          `<a href="${match}" target="_blank" rel="noopener noreferrer" class="text-blue-700 underline">${match}</a>`
+          `<a href="${match}" target="_blank" rel="noopener noreferrer" className="text-blue-700 underline">${match}</a>`
       );
 
       return (
