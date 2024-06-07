@@ -92,7 +92,7 @@ const JobApplications = () => {
   };
 
   return (
-    <div className="p-6 my-5 bg-white shadow-lg rounded-lg w-full">
+    <div className="p-6 my-5 bg-white min-h-screen shadow-lg rounded-lg w-full">
       <h2 className="text-3xl font-bold text-blue-700 mb-6">Job Applications</h2>
       {loading ? (
         <div>Loading...</div>

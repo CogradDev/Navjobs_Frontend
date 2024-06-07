@@ -15,6 +15,7 @@ import AuthState from "./context/auth/AuthState";
 import MyJobs from "./components/recruiter/MyJobs";
 import AllJobs from "./components/homepage/AllJobs";
 import Footer from "./components/homepage/Footer";
+import EmployeePage from "./components/recruiter/EmployeePage";
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
             <Route exact path="/myjobs" element={<MyJobs />} />
             <Route exact path="/alljobs" element={<AllJobs />} />
             <Route path="/job/applications/:jobId" element={<JobApplications />} />
+            <Route exact path="/emp" element ={<EmployeePage/>}/>
             <Route exact path="/footer" element={<Footer />} />
           </Routes>
         </Router>

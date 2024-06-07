@@ -836,7 +836,7 @@ const MyJobs = () => {
   },[]);
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container min-h-screen mx-auto px-4 py-8">
       <div className="flex flex-row justify-between items-center mb-8">
         <h1 className="text-3xl font-bold text-gray-800 mb-4">My Jobs</h1>
         <button
