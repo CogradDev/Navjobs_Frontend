@@ -1,10 +1,19 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import applicantBGImage from "../Images/Resume folder-bro.png";
 import apiList from "../../libs/apiLists";
+import authContext from "../../context/auth/authContext";
+import { server } from "../../libs/apiLists";
+
+
 
 const ApplicantSignUp = () => {
+  let navigate = useNavigate();
+  const context = useContext(authContext);
+  const { setIsloggedin, setUserType ,setUserData} = context;
+
+
   const [signupDetails, setSignupDetails] = useState({
     type: "applicant",
     uName: "",
@@ -138,6 +147,7 @@ const ApplicantSignUp = () => {
       });
 
       const otpVerificationJson = await otpVerificationResponse.json();
+
       if (otpVerificationJson.success) {
         const response = await handleApplicant();
         const json = await response.json();
@@ -146,6 +156,21 @@ const ApplicantSignUp = () => {
             `Applicant account created for ${signupDetails.uEmail}`
           );
           // Redirect or handle success as needed
+          setIsloggedin(true);
+          setUserType(json.type);
+          setUserData({
+            profilePhoto : `${server}${json.userData.profile.replace("./", "/")}`,
+            username : json.userData.name
+          });
+          localStorage.setItem("token", json.token);
+          localStorage.setItem("type", json.type);
+          localStorage.setItem("user", JSON.stringify({
+            profilePhoto: `${server}${json.userData.profile.replace("./", "/")}`,
+            username: json.userData.name,
+        }));
+        
+       
+          navigate("/");
         } else {
           toast.error(json.message || "Error signing up applicant");
         }

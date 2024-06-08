@@ -168,14 +168,14 @@ const JobDetailsPane = ({ job }) => {
       const emailReplaced = line.replace(
         emailRegex,
         (match) =>
-          `<a href="mailto:${match}" class="text-blue-700 underline">${match}</a>`
+          `<a href="mailto:${match}" className="text-blue-700 underline">${match}</a>`
       );
 
       // Replace URLs with a styled span
       const urlReplaced = emailReplaced.replace(
         urlRegex,
         (match) =>
-          `<a href="${match}" target="_blank" rel="noopener noreferrer" class="text-blue-700 underline">${match}</a>`
+          `<a href="${match}" target="_blank" rel="noopener noreferrer" className="text-blue-700 underline">${match}</a>`
       );
 
       return (
@@ -249,10 +249,10 @@ const JobDetailsPane = ({ job }) => {
       <div className="flex justify-center mt-8">
         <button
           className={`bg-blue-600 text-white px-4 py-2 rounded-lg shadow-md hover:bg-blue-700 transition-colors duration-300 ${
-            userType() === "recruiter" ? "opacity-50 cursor-not-allowed" : ""
+            userType() !== "applicant" ? "opacity-50 cursor-not-allowed" : ""
           }`}
           onClick={() => setOpen(true)}
-          disabled={userType() === "recruiter"}
+          disabled={userType() !== "applicant"}
         >
           Apply Now
         </button>
@@ -682,7 +682,7 @@ const AllJobs = () => {
   }, []);
 
   return (
-    <div className="p-4 max-w-screen-xl flex flex-col items-center mx-auto relative overflow-auto">
+    <div className="p-4 min-h-screen  max-w-screen-xl flex flex-col items-center mx-auto relative overflow-auto">
       <div className="items-center bg-gray-100 p-6 rounded-lg mb-6 w-11/12 md:w-4/5 mx-auto shadow-lg">
         <div className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-4">
           <div className="relative flex-1 w-full md:w-auto">

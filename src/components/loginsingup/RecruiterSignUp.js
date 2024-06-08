@@ -1,10 +1,17 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import apiList from "../../libs/apiLists";
 import recruiterBGImage from "../Images/People search-rafiki.png";
+import authContext from "../../context/auth/authContext";
+import profilePic from "../Images/user.png";
+
 
 const RecruiterSignUp = () => {
+  let navigate = useNavigate();
+  const context = useContext(authContext);
+  const { setIsloggedin, setUserType,setUserData } = context;
+
   const [signupDetails, setSignupDetails] = useState({
     type: "recruiter",
     uName: "",
@@ -123,6 +130,20 @@ const RecruiterSignUp = () => {
             `Recruiter account created for ${signupDetails.uEmail}`
           );
           // Redirect or handle success as needed
+          setIsloggedin(true);
+          setUserType(json.type);
+          setUserData({
+            profilePhoto : profilePic,
+            username : json.userData.name
+          });
+          localStorage.setItem("token", json.token);
+          localStorage.setItem("type", json.type);
+          localStorage.setItem("user", JSON.stringify({
+            profilePhoto: profilePic,
+            username: json.userData.name,
+        }));
+        
+          navigate("/");
         } else {
           toast.error(signupJson.message || "Error signing up recruiter");
         }

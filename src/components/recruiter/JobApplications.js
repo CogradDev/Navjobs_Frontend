@@ -7,8 +7,6 @@ import defaultProfilePhoto from "../../Images/user.png";
 import {
   FaChevronDown,
   FaCalendarAlt,
-  FaGraduationCap,
-  FaClipboardList,
   FaFileAlt,
 } from "react-icons/fa";
 
@@ -28,10 +26,8 @@ const JobApplications = () => {
         const json = await response.json();
 
         if (json.success) {
-          const applications = json.applications;
-          setApplications(applications);
+          setApplications(json.applications);
         } else {
-          console.log(json.message);
           toast.error(json.message || "Failed to fetch applications");
         }
       } catch (error) {
@@ -65,28 +61,77 @@ const JobApplications = () => {
     }
   };
 
+  const handleStatusChange = async (applicationId, newStatus) => {
+    try {
+      const response = await fetch(`${apiList.applications}/${applicationId}`, {
+        method: 'PUT',
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ status: newStatus }),
+      });
+
+      const json = await response.json();
+
+      if (json.message) {
+        setApplications((prevApplications) =>
+          prevApplications.map((application) =>
+            application._id === applicationId
+              ? { ...application, status: newStatus }
+              : application
+          )
+        );
+        toast.success(json.message);
+      } else {
+        toast.error(json.message || "Failed to update status");
+      }
+    } catch (error) {
+      toast.error("Error updating status");
+    }
+  };
+
   return (
-    <div className="p-6 my-5 bg-white shadow-lg rounded-lg w-full">
+    <div className="p-6 my-5 bg-white min-h-screen shadow-lg rounded-lg w-full">
       <h2 className="text-3xl font-bold text-blue-700 mb-6">Job Applications</h2>
       {loading ? (
         <div>Loading...</div>
-      ) : applications && applications.length === 0 ? (
+      ) : applications.length === 0 ? (
         <div>No applications found</div>
       ) : (
         applications.map((application, index) => (
-          <div
-            className="bg-white p-6 rounded-lg shadow-md mb-6"
-            key={index}
-          >
+          <div className="bg-white p-6 rounded-lg shadow-md mb-6" key={index}>
             <div className="flex flex-col md:flex-row justify-between items-center mb-4">
               <h3 className="text-xl font-semibold text-gray-800">Application Details</h3>
-              <span
-                className={`text-md font-semibold rounded-full px-3 py-1 mt-2 md:mt-0 ${getStatusColor(
-                  application.status
-                )}`}
-              >
-                {application.status}
-              </span>
+              <div className="flex items-center mt-2 md:mt-0">
+                <span
+                  className={`text-md font-semibold rounded-full px-3 py-1 ${getStatusColor(
+                    application.status
+                  )}`}
+                >
+                  {application.status}
+                </span>
+                <div className="relative ml-4">
+                  <select
+                    className="appearance-none block w-full bg-white border border-gray-300 hover:border-gray-400 px-4 py-2 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-blue-500 transition-colors"
+                    value={application.status}
+                    onChange={(e) =>
+                      handleStatusChange(application._id, e.target.value)
+                    }
+                  >
+                    <option value="Applied">Applied</option>
+                    <option value="Shortlisted">Shortlisted</option>
+                    <option value="Accepted">Accepted</option>
+                    <option value="Rejected">Rejected</option>
+                    <option value="Deleted">Deleted</option>
+                    <option value="Cancelled">Cancelled</option>
+                    <option value="Finished">Finished</option>
+                  </select>
+                  <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                    <FaChevronDown />
+                  </div>
+                </div>
+              </div>
             </div>
             <div className="flex flex-col md:flex-row items-center mb-4">
               <img
@@ -121,13 +166,13 @@ const formatText = (text) => {
       const emailReplaced = line.replace(
         emailRegex,
         (match) =>
-          `<a href="mailto:${match}" class="text-blue-700 underline">${match}</a>`
+          `<a href="mailto:${match}" className="text-blue-700 underline">${match}</a>`
       );
 
       const urlReplaced = emailReplaced.replace(
         urlRegex,
         (match) =>
-          `<a href="${match}" target="_blank" rel="noopener noreferrer" class="text-blue-700 underline">${match}</a>`
+          `<a href="${match}" target="_blank" rel="noopener noreferrer" className="text-blue-700 underline">${match}</a>`
       );
 
       return (

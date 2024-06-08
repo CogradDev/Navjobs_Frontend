@@ -4,11 +4,14 @@ import { toast } from "react-toastify";
 import loginImg from "../Images/Login-bro.png";
 import apiList from "../../libs/apiLists";
 import authContext from "../../context/auth/authContext";
+import profilePic from "../Images/user.png";
+import { server } from "../../libs/apiLists";
+
 
 const Login = () => {
   let navigate = useNavigate();
   const context = useContext(authContext);
-  const { setIsloggedin, setUserType } = context;
+  const { setIsloggedin, setUserType, setUserData } = context;
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -31,17 +34,17 @@ const Login = () => {
     try {
       if (!email) {
         return toast.warn("Please enter the email address");
-      } else if (email) {
+      } else {
         const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!regex.test(email)) {
-          return toast.warn("Enter a valid Email type.");
+          return toast.warn("Enter a valid email address.");
         }
       }
 
       if (!password) {
         return toast.warn("Please enter the password");
       } else if (password.length < 8) {
-        return toast.warn("Password should be of 8 characters");
+        return toast.warn("Password should be at least 8 characters");
       }
 
       if (!isClicked) {
@@ -51,30 +54,38 @@ const Login = () => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ email: email, password: password }),
+          body: JSON.stringify({ email, password }),
         });
 
         const json = await response.json();
 
         if (json.success) {
-          setIsClicked(false);
-          toast.success(`Logged in successfully..!`);
+          toast.success("Logged in successfully!");
           setIsloggedin(true);
           setUserType(json.type);
+          setUserData({
+            profilePhoto:  json.type==="recruiter"?profilePic:`${server}${json.userData.profile.replace("./", "/")}`,
+            username: json.userData.name,
+          });
           localStorage.setItem("token", json.token);
           localStorage.setItem("type", json.type);
-
+          localStorage.setItem("user", JSON.stringify({
+            profilePhoto: json.type === "recruiter"?profilePic:`${server}${json.userData.profile.replace("./", "/")}`,
+            username: json.userData.name,
+          }));
           navigate("/");
         } else {
           toast.warn(json.message);
-          setIsClicked(false);
         }
       }
     } catch (err) {
+      console.log(err)
       toast.error("Internal Server Error Occurred.");
+    } finally {
       setIsClicked(false);
     }
   };
+
 
   return (
     <section className="bg-gray-50 dark:bg-gray-900 min-h-screen flex items-center justify-center">
