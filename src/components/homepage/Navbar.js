@@ -40,7 +40,10 @@ const Navbar = () => {
   useEffect(() => {
     setIsloggedin(localStorage.getItem("token"));
     setUserType(localStorage.getItem("type"));
-    setUserData(JSON.parse(localStorage.getItem("user")));
+    if (localStorage.getItem("user")) {
+      setUserData(JSON.parse(localStorage.getItem("user")));
+    }
+    // eslint-disable-next-line
   }, []);
 
   const [open, setOpen] = useState(false);
@@ -57,6 +60,7 @@ const Navbar = () => {
     if (isCartOpen) {
       setCartOpen(false);
     }
+    document.body.style.overflowY = "auto";
   };
 
   let recruiterLink = [
@@ -80,8 +84,6 @@ const Navbar = () => {
   };
 
   const handleLogout = () => {
-
-
     localStorage.removeItem("type");
     localStorage.removeItem("token");
     localStorage.setItem(
