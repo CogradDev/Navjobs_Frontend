@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import apiList from "../../libs/apiLists";
 import accountImg from "../../Images/Account-rafiki.png";
+import RecruiterProfileLoader from "../skeletonloader/RecruiterProfileLoader";
 
 const RecruiterProfile = () => {
   const [profileDetails, setProfileDetails] = useState({
@@ -16,12 +17,14 @@ const RecruiterProfile = () => {
   });
   const [isModalOpen, setModalOpen] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     fetchData();
   }, []);
 
   const fetchData = async () => {
+    setIsLoaded(false);
     try {
       const response = await fetch(apiList.user, {
         method: "GET",
@@ -33,6 +36,7 @@ const RecruiterProfile = () => {
       const json = await response.json();
       if (json.success) {
         setProfileDetails(json.data);
+        setIsLoaded(true);
       } else {
         toast.error(json.message);
       }
@@ -91,32 +95,34 @@ const RecruiterProfile = () => {
         <div className="flex flex-col md:flex-row items-start mb-8 space-y-4 md:space-y-0 md:space-x-6 w-full max-w-4xl">
           <img src={accountImg} alt="Profile" className="w-full md:w-1/3 object-cover" />
           <div className="border rounded-lg shadow-lg p-4 md:p-6 bg-white w-full md:flex-1">
-            <div>
-              <h3 className="text-lg md:text-xl font-semibold">
-                Hello, <span className="text-blue-600">{profileDetails.name}</span>
-              </h3>
-              <p className="text-sm md:text-lg text-gray-700 mt-2">
-                Contact Number: <span className="font-semibold">{profileDetails.contactNumber}</span>
-              </p>
-              <p className="text-sm md:text-lg text-gray-700 mt-1">
-                Bio: <span className="font-semibold">{profileDetails.bio}</span>
-              </p>
-              <p className="text-sm md:text-lg text-gray-700 mt-1">
-                Type: <span className="font-semibold">{profileDetails.type}</span>
-              </p>
-              <p className="text-sm md:text-lg text-gray-700 mt-1">
-                Company Name: <span className="font-semibold">{profileDetails.companyName}</span>
-              </p>
-              <p className="text-sm md:text-lg text-gray-700 mt-1">
-                Location: <span className="font-semibold">{profileDetails.location}</span>
-              </p>
-              <p className="text-sm md:text-lg text-gray-700 mt-1">
-                Industry: <span className="font-semibold">{profileDetails.industry}</span>
-              </p>
-              <p className="text-sm md:text-lg text-gray-700 mt-1">
-                Company Description: <span className="font-semibold">{profileDetails.companyDescription}</span>
-              </p>
-            </div>
+            {
+              isLoaded ? <div>
+                <h3 className="text-lg md:text-xl font-semibold">
+                  Hello, <span className="text-blue-600">{profileDetails.name}</span>
+                </h3>
+                <p className="text-sm md:text-lg text-gray-700 mt-2">
+                  Contact Number: <span className="font-semibold">{profileDetails.contactNumber}</span>
+                </p>
+                <p className="text-sm md:text-lg text-gray-700 mt-1">
+                  Bio: <span className="font-semibold">{profileDetails.bio}</span>
+                </p>
+                <p className="text-sm md:text-lg text-gray-700 mt-1">
+                  Type: <span className="font-semibold">{profileDetails.type}</span>
+                </p>
+                <p className="text-sm md:text-lg text-gray-700 mt-1">
+                  Company Name: <span className="font-semibold">{profileDetails.companyName}</span>
+                </p>
+                <p className="text-sm md:text-lg text-gray-700 mt-1">
+                  Location: <span className="font-semibold">{profileDetails.location}</span>
+                </p>
+                <p className="text-sm md:text-lg text-gray-700 mt-1">
+                  Industry: <span className="font-semibold">{profileDetails.industry}</span>
+                </p>
+                <p className="text-sm md:text-lg text-gray-700 mt-1">
+                  Company Description: <span className="font-semibold">{profileDetails.companyDescription}</span>
+                </p>
+              </div> : <RecruiterProfileLoader />
+            }
             <button
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mt-4 transition duration-300 ease-in-out w-full md:w-auto"
               onClick={() => setModalOpen(true)}
@@ -223,9 +229,8 @@ const RecruiterProfile = () => {
               </div>
             </div>
             <button
-              className={`w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded transition duration-300 ease-in-out ${
-                isClicked ? "opacity-50 cursor-not-allowed" : ""
-              }`}
+              className={`w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded transition duration-300 ease-in-out ${isClicked ? "opacity-50 cursor-not-allowed" : ""
+                }`}
               onClick={handleUpdate}
               disabled={isClicked}
             >

@@ -7,7 +7,7 @@ const AuthState = (props) => {
   const [userType, setUserType] = useState("");
   const [userData, setUserData] = useState({
     profilePhoto: profilePic,
-    username: "Guest",
+    username: "Guest",  
   });
 
   return (

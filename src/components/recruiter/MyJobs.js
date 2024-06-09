@@ -11,6 +11,7 @@ import {
   FaCheck,
 } from "react-icons/fa";
 import apiList from "../../libs/apiLists";
+import MyjobsLoader from '../skeletonloader/MyjobsLoader';
 
 const JobTile = ({ job, getData }) => {
   const history = useNavigate();
@@ -114,7 +115,7 @@ const JobTile = ({ job, getData }) => {
   const postedOn = new Date(job.dateOfPosting);
 
   return (
-    <div className="p-6 my-5 bg-white shadow-lg rounded-lg w-full transition-transform transform hover:scale-105 hover:shadow-xl">
+    <div className="p-6 my-5 bg-white shadow-lg rounded-lg w-full">
       <div className="flex flex-col md:flex-row">
         <div className="w-3/4 space-y-2">
           <h2 className="text-2xl font-bold text-blue-700">{job.title}</h2>
@@ -482,9 +483,8 @@ const FilterPopup = ({
 }) => {
   return (
     <div
-      className={`fixed my-11 items-center justify-center z-50 inset-0 overflow-y-auto transition-opacity duration-300 ${
-        open ? "opacity-100 visible" : "opacity-0 invisible"
-      }`}
+      className={`fixed my-11 items-center justify-center z-50 inset-0 overflow-y-auto transition-opacity duration-300 ${open ? "opacity-100 visible" : "opacity-0 invisible"
+        }`}
     >
       <div className="flex items-center justify-center min-h-screen px-4 text-center">
         <div
@@ -604,9 +604,8 @@ const FilterPopup = ({
                     />
                     <div className="text-center mt-2 text-gray-600">
                       {searchOptions.duration !== "0"
-                        ? `${searchOptions.duration} month${
-                            searchOptions.duration > 1 ? "s" : ""
-                          }`
+                        ? `${searchOptions.duration} month${searchOptions.duration > 1 ? "s" : ""
+                        }`
                         : "Flexible"}
                     </div>
                   </div>
@@ -690,11 +689,10 @@ const FilterPopup = ({
                     {/* Ascending/Descending order */}
                     <div className="flex mt-2 space-x-4">
                       <div
-                        className={`flex items-center cursor-pointer ${
-                          searchOptions.sortOrder === "asc"
+                        className={`flex items-center cursor-pointer ${searchOptions.sortOrder === "asc"
                             ? "text-blue-600"
                             : "text-gray-700"
-                        }`}
+                          }`}
                         onClick={() =>
                           setSearchOptions({
                             ...searchOptions,
@@ -703,20 +701,18 @@ const FilterPopup = ({
                         }
                       >
                         <FaCheck
-                          className={`mr-2 ${
-                            searchOptions.sortOrder === "asc"
+                          className={`mr-2 ${searchOptions.sortOrder === "asc"
                               ? "block"
                               : "hidden"
-                          }`}
+                            }`}
                         />
                         Ascending
                       </div>
                       <div
-                        className={`flex items-center cursor-pointer ${
-                          searchOptions.sortOrder === "desc"
+                        className={`flex items-center cursor-pointer ${searchOptions.sortOrder === "desc"
                             ? "text-blue-600"
                             : "text-gray-700"
-                        }`}
+                          }`}
                         onClick={() =>
                           setSearchOptions({
                             ...searchOptions,
@@ -725,11 +721,10 @@ const FilterPopup = ({
                         }
                       >
                         <FaCheck
-                          className={`mr-2 ${
-                            searchOptions.sortOrder === "desc"
+                          className={`mr-2 ${searchOptions.sortOrder === "desc"
                               ? "block"
                               : "hidden"
-                          }`}
+                            }`}
                         />
                         Descending
                       </div>
@@ -781,8 +776,10 @@ const MyJobs = () => {
     sortOrder: "desc",
   });
   const [openFilter, setOpenFilter] = useState(false);
+  const [isrequestsend, setIsrequestsend] = useState(false);
 
   const getData = async (filter = false) => {
+    setIsrequestsend(false);
     let searchParams = [];
     if (filter) {
       if (searchOptions.query) searchParams.push(`q=${searchOptions.query}`);
@@ -818,12 +815,14 @@ const MyJobs = () => {
           },
         }
       );
-       console.log(response)
+      console.log(response)
       const json = await response.json();
       if (json.success) {
         setJobs(json.data);
+        setIsrequestsend(true);
       } else {
-        toast.error(json.message);
+        // toast.error(json.message);
+        setIsrequestsend(true);
       }
     } catch (error) {
       toast.error("Failed to fetch jobs");
@@ -833,7 +832,9 @@ const MyJobs = () => {
   useEffect(() => {
     // Fetch all jobs initially
     getData(false);
-  },[]);
+    
+    // eslint-disable-next-line
+  }, []);
 
   return (
     <div className="container min-h-screen mx-auto px-4 py-8">
@@ -852,7 +853,8 @@ const MyJobs = () => {
             <JobTile key={job._id} job={job} getData={getData} />
           ))
         ) : (
-          <div className="text-center text-xl text-gray-600">No jobs found</div>
+          !isrequestsend ? <MyjobsLoader/> : <div className="text-center font-semibold text-2xl mt-16">Job not found.</div>
+          // <MyjobsLoader/>
         )}
       </div>
       <FilterPopup
