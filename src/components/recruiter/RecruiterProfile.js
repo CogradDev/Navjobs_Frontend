@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import apiList from "../../libs/apiLists";
 import accountImg from "../../Images/Account-rafiki.png";
-
+import RecruiterProfileLoader from "../skeletonloader/RecruiterProfileLoader";
 const RecruiterProfile = () => {
   const [profileDetails, setProfileDetails] = useState({
     name: "",
@@ -16,12 +16,13 @@ const RecruiterProfile = () => {
   });
   const [isModalOpen, setModalOpen] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
-
+  const [isLoaded, setIsLoaded] = useState(false);
   useEffect(() => {
     fetchData();
   }, []);
 
   const fetchData = async () => {
+    setIsLoaded(false);
     try {
       const response = await fetch(apiList.user, {
         method: "GET",
@@ -33,6 +34,7 @@ const RecruiterProfile = () => {
       const json = await response.json();
       if (json.success) {
         setProfileDetails(json.data);
+        setIsLoaded(true);
       } else {
         toast.error(json.message);
       }
@@ -89,34 +91,60 @@ const RecruiterProfile = () => {
       <h2 className="text-2xl md:text-4xl font-bold my-8">Profile</h2>
       <div className="w-full flex flex-col items-center justify-center">
         <div className="flex flex-col md:flex-row items-start mb-8 space-y-4 md:space-y-0 md:space-x-6 w-full max-w-4xl">
-          <img src={accountImg} alt="Profile" className="w-full md:w-1/3 object-cover" />
+          <img
+            src={accountImg}
+            alt="Profile"
+            className="w-full md:w-1/3 object-cover"
+          />
           <div className="border rounded-lg shadow-lg p-4 md:p-6 bg-white w-full md:flex-1">
-            <div>
-              <h3 className="text-lg md:text-xl font-semibold">
-                Hello, <span className="text-blue-600">{profileDetails.name}</span>
-              </h3>
-              <p className="text-sm md:text-lg text-gray-700 mt-2">
-                Contact Number: <span className="font-semibold">{profileDetails.contactNumber}</span>
-              </p>
-              <p className="text-sm md:text-lg text-gray-700 mt-1">
-                Bio: <span className="font-semibold">{profileDetails.bio}</span>
-              </p>
-              <p className="text-sm md:text-lg text-gray-700 mt-1">
-                Type: <span className="font-semibold">{profileDetails.type}</span>
-              </p>
-              <p className="text-sm md:text-lg text-gray-700 mt-1">
-                Company Name: <span className="font-semibold">{profileDetails.companyName}</span>
-              </p>
-              <p className="text-sm md:text-lg text-gray-700 mt-1">
-                Location: <span className="font-semibold">{profileDetails.location}</span>
-              </p>
-              <p className="text-sm md:text-lg text-gray-700 mt-1">
-                Industry: <span className="font-semibold">{profileDetails.industry}</span>
-              </p>
-              <p className="text-sm md:text-lg text-gray-700 mt-1">
-                Company Description: <span className="font-semibold">{profileDetails.companyDescription}</span>
-              </p>
-            </div>
+            {isLoaded ? (
+              <div>
+                <h3 className="text-lg md:text-xl font-semibold">
+                  Hello,{" "}
+                  <span className="text-blue-600">{profileDetails.name}</span>
+                </h3>
+                <p className="text-sm md:text-lg text-gray-700 mt-2">
+                  Contact Number:{" "}
+                  <span className="font-semibold">
+                    {profileDetails.contactNumber}
+                  </span>
+                </p>
+                <p className="text-sm md:text-lg text-gray-700 mt-1">
+                  Bio:{" "}
+                  <span className="font-semibold">{profileDetails.bio}</span>
+                </p>
+                <p className="text-sm md:text-lg text-gray-700 mt-1">
+                  Type:{" "}
+                  <span className="font-semibold">{profileDetails.type}</span>
+                </p>
+                <p className="text-sm md:text-lg text-gray-700 mt-1">
+                  Company Name:{" "}
+                  <span className="font-semibold">
+                    {profileDetails.companyName}
+                  </span>
+                </p>
+                <p className="text-sm md:text-lg text-gray-700 mt-1">
+                  Location:{" "}
+                  <span className="font-semibold">
+                    {profileDetails.location}
+                  </span>
+                </p>
+                <p className="text-sm md:text-lg text-gray-700 mt-1">
+                  Industry:{" "}
+                  <span className="font-semibold">
+                    {profileDetails.industry}
+                  </span>
+                </p>
+                <p className="text-sm md:text-lg text-gray-700 mt-1">
+                  Company Description:{" "}
+                  <span className="font-semibold">
+                    {profileDetails.companyDescription}
+                  </span>
+                </p>
+              </div>
+            ) : (
+              <RecruiterProfileLoader />
+            )}
             <button
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mt-4 transition duration-300 ease-in-out w-full md:w-auto"
               onClick={() => setModalOpen(true)}
@@ -150,7 +178,9 @@ const RecruiterProfile = () => {
             </h3>
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 mb-4 md:mb-6">
               <div className="mb-4">
-                <label className="block text-sm font-medium text-blue-700 mb-2">Name</label>
+                <label className="block text-sm font-medium text-blue-700 mb-2">
+                  Name
+                </label>
                 <input
                   type="text"
                   value={profileDetails.name}
@@ -159,16 +189,22 @@ const RecruiterProfile = () => {
                 />
               </div>
               <div className="mb-4">
-                <label className="block text-sm font-medium text-blue-700 mb-2">Contact Number</label>
+                <label className="block text-sm font-medium text-blue-700 mb-2">
+                  Contact Number
+                </label>
                 <input
                   type="tel"
                   value={profileDetails.contactNumber}
-                  onChange={(e) => handleInputChange("contactNumber", e.target.value)}
+                  onChange={(e) =>
+                    handleInputChange("contactNumber", e.target.value)
+                  }
                   className="input-field w-full border-2 border-gray-400 rounded-lg shadow-sm p-2"
                 />
               </div>
               <div className="mb-4 md:col-span-2">
-                <label className="block text-sm font-medium text-blue-700 mb-2">Bio</label>
+                <label className="block text-sm font-medium text-blue-700 mb-2">
+                  Bio
+                </label>
                 <textarea
                   rows="4"
                   value={profileDetails.bio}
@@ -177,7 +213,9 @@ const RecruiterProfile = () => {
                 />
               </div>
               <div className="mb-4">
-                <label className="block text-sm font-medium text-blue-700 mb-2">Type</label>
+                <label className="block text-sm font-medium text-blue-700 mb-2">
+                  Type
+                </label>
                 <input
                   type="text"
                   value={profileDetails.type}
@@ -186,38 +224,54 @@ const RecruiterProfile = () => {
                 />
               </div>
               <div className="mb-4">
-                <label className="block text-sm font-medium text-blue-700 mb-2">Company Name</label>
+                <label className="block text-sm font-medium text-blue-700 mb-2">
+                  Company Name
+                </label>
                 <input
                   type="text"
                   value={profileDetails.companyName}
-                  onChange={(e) => handleInputChange("companyName", e.target.value)}
+                  onChange={(e) =>
+                    handleInputChange("companyName", e.target.value)
+                  }
                   className="input-field w-full border-2 border-gray-400 rounded-lg shadow-sm p-2"
                 />
               </div>
               <div className="mb-4">
-                <label className="block text-sm font-medium text-blue-700 mb-2">Location</label>
+                <label className="block text-sm font-medium text-blue-700 mb-2">
+                  Location
+                </label>
                 <input
                   type="text"
                   value={profileDetails.location}
-                  onChange={(e) => handleInputChange("location", e.target.value)}
+                  onChange={(e) =>
+                    handleInputChange("location", e.target.value)
+                  }
                   className="input-field w-full border-2 border-gray-400 rounded-lg shadow-sm p-2"
                 />
               </div>
               <div className="mb-4">
-                <label className="block text-sm font-medium text-blue-700 mb-2">Industry</label>
+                <label className="block text-sm font-medium text-blue-700 mb-2">
+                  Industry
+                </label>
                 <input
                   type="text"
                   value={profileDetails.industry}
-                  onChange={(e) => handleInputChange("industry", e.target.value)}
+                  onChange={(e) =>
+                    handleInputChange("industry", e.target.value)
+                  }
                   className="input-field w-full border-2 border-gray-400 rounded-lg shadow-sm p-2"
                 />
               </div>
               <div className="mb-4 md:col-span-2">
-                <label className="block text-sm font-medium text-blue-700 mb-2">Company Description</label>
+                <label className="block text-sm font-medium text-blue-700 mb-2">
+                  Company Description
+                </label>
                 <textarea
                   rows="4"
                   value={profileDetails.companyDescription}
-                  onChange={(e) => handleInputChange("companyDescription", e.target.value)}
+                  onChange={(e) =>
+                    handleInputChange("companyDescription", e.target.value)
+                  }
                   className="input-field w-full border-2 border-gray-400 rounded-lg shadow-sm p-2"
                 />
               </div>

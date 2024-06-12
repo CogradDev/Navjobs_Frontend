@@ -11,7 +11,7 @@ import {
   FaCheck,
 } from "react-icons/fa";
 import apiList from "../../libs/apiLists";
-
+import MyjobsLoader from "../skeletonloader/MyjobsLoader";
 const JobTile = ({ job, getData }) => {
   const history = useNavigate();
   const [open, setOpen] = useState(false);
@@ -114,7 +114,8 @@ const JobTile = ({ job, getData }) => {
   const postedOn = new Date(job.dateOfPosting);
 
   return (
-    <div className="p-6 my-5 bg-white shadow-lg rounded-lg w-full transition-transform transform hover:scale-105 hover:shadow-xl">
+    // <div className="p-6 my-5 bg-white shadow-lg rounded-lg w-full transition-transform transform hover:scale-105 hover:shadow-xl">
+    <div className="p-6 my-5 bg-white shadow-lg rounded-lg w-full">
       <div className="flex flex-col md:flex-row">
         <div className="w-3/4 space-y-2">
           <h2 className="text-2xl font-bold text-blue-700">{job.title}</h2>
@@ -781,8 +782,9 @@ const MyJobs = () => {
     sortOrder: "desc",
   });
   const [openFilter, setOpenFilter] = useState(false);
-
+  const [isrequestsend, setIsrequestsend] = useState(false);
   const getData = async (filter = false) => {
+    setIsrequestsend(false);
     let searchParams = [];
     if (filter) {
       if (searchOptions.query) searchParams.push(`q=${searchOptions.query}`);
@@ -818,12 +820,13 @@ const MyJobs = () => {
           },
         }
       );
-       console.log(response)
+      console.log(response);
       const json = await response.json();
       if (json.success) {
         setJobs(json.data);
+        setIsrequestsend(true);
       } else {
-        toast.error(json.message);
+        setIsrequestsend(true);
       }
     } catch (error) {
       toast.error("Failed to fetch jobs");
@@ -833,7 +836,7 @@ const MyJobs = () => {
   useEffect(() => {
     // Fetch all jobs initially
     getData(false);
-  },[]);
+  }, []);
 
   return (
     <div className="container min-h-screen mx-auto px-4 py-8">
@@ -851,8 +854,13 @@ const MyJobs = () => {
           jobs.map((job) => (
             <JobTile key={job._id} job={job} getData={getData} />
           ))
+        ) : // <div className="text-center text-xl text-gray-600">No jobs found</div>
+        !isrequestsend ? (
+          <MyjobsLoader />
         ) : (
-          <div className="text-center text-xl text-gray-600">No jobs found</div>
+          <div className="text-center font-semibold text-2xl mt-16">
+            Job not found.
+          </div>
         )}
       </div>
       <FilterPopup
