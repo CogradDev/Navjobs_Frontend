@@ -1,3 +1,15 @@
-# https://www.robotstxt.org/robotstxt.html
 User-agent: *
-Disallow:
+Disallow: /admin/
+Disallow: /login/
+Disallow: /register/
+Disallow: /settings/
+Disallow: /private/
+Disallow: /api/
+Disallow: /scripts/
+Disallow: /temporary/
+
+# Allow all search engines to access everything else
+Allow: /
+
+# If you have a sitemap, include its location:
+Sitemap: https://www.navjob.com/sitemap.xml
