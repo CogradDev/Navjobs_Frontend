@@ -11,6 +11,11 @@ import {
 } from "react-icons/fa";
 
 const JobApplications = () => {
+
+  useEffect(()=>{
+		window.scrollTo(0, 0);
+	}, []);
+
   const { jobId } = useParams();
   const [applications, setApplications] = useState([]);
   const [loading, setLoading] = useState(true);

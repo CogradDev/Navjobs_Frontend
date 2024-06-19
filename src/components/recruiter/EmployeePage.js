@@ -5,6 +5,11 @@ import defaultProfilePhoto from "../../Images/user.png";
 import { FaChevronDown, FaCalendarAlt, FaFileAlt } from "react-icons/fa";
 
 const EmployeePage = () => {
+
+  useEffect(()=>{
+		window.scrollTo(0, 0);
+	}, []);
+
   const [employees, setEmployees] = useState([]);
   const [loading, setLoading] = useState(true);
 

@@ -6,6 +6,11 @@ import userPhoto from "../../Images/user.png";
 import { server } from "../../libs/apiLists";
 
 const ApplicantProfile = () => {
+
+  useEffect(()=>{
+		window.scrollTo(0, 0);
+	}, []);
+
   const [profileDetails, setProfileDetails] = useState({
     name: "",
     bio: "",

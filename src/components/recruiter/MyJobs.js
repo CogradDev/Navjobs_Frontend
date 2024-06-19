@@ -765,6 +765,11 @@ const FilterPopup = ({
 };
 
 const MyJobs = () => {
+
+  useEffect(()=>{
+		window.scrollTo(0, 0);
+	}, []);
+
   const [jobs, setJobs] = useState([]);
   const [searchOptions, setSearchOptions] = useState({
     query: "",

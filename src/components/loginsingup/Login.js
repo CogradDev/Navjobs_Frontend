@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import loginImg from "../Images/Login-bro.png";
@@ -9,6 +9,10 @@ import { server } from "../../libs/apiLists";
 
 
 const Login = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   let navigate = useNavigate();
   const context = useContext(authContext);
   const { setIsloggedin, setUserType, setUserData } = context;
@@ -64,13 +68,13 @@ const Login = () => {
           setIsloggedin(true);
           setUserType(json.type);
           setUserData({
-            profilePhoto:  json.type==="recruiter"?profilePic:`${server}${json.userData.profile.replace("./", "/")}`,
+            profilePhoto: json.type === "recruiter" ? profilePic : `${server}${json.userData.profile.replace("./", "/")}`,
             username: json.userData.name,
           });
           localStorage.setItem("token", json.token);
           localStorage.setItem("type", json.type);
           localStorage.setItem("user", JSON.stringify({
-            profilePhoto: json.type === "recruiter"?profilePic:`${server}${json.userData.profile.replace("./", "/")}`,
+            profilePhoto: json.type === "recruiter" ? profilePic : `${server}${json.userData.profile.replace("./", "/")}`,
             username: json.userData.name,
           }));
           navigate("/");
