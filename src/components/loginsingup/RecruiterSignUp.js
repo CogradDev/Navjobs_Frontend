@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import apiList from "../../libs/apiLists";
 import recruiterBGImage from "../Images/People search-rafiki.png";
 
 const RecruiterSignUp = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   const [signupDetails, setSignupDetails] = useState({
     type: "recruiter",
     uName: "",

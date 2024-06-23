@@ -6,6 +6,9 @@ import userPhoto from "../../Images/user.png";
 import { server } from "../../libs/apiLists";
 
 const ApplicantProfile = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   const [profileDetails, setProfileDetails] = useState({
     name: "",
     bio: "",
@@ -74,7 +77,7 @@ const ApplicantProfile = () => {
       formData.append("profile", profileDetails.profile);
     }
 
-    console.log(formData)
+    console.log(formData);
     try {
       const response = await fetch(apiList.user, {
         method: "PUT",

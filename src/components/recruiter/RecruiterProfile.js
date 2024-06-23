@@ -4,6 +4,9 @@ import apiList from "../../libs/apiLists";
 import accountImg from "../../Images/Account-rafiki.png";
 
 const RecruiterProfile = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   const [profileDetails, setProfileDetails] = useState({
     name: "",
     bio: "",

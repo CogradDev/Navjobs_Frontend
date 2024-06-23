@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import loginImg from "../Images/Login-bro.png";
@@ -6,6 +6,9 @@ import apiList from "../../libs/apiLists";
 import authContext from "../../context/auth/authContext";
 
 const Login = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   let navigate = useNavigate();
   const context = useContext(authContext);
   const { setIsloggedin, setUserType } = context;

@@ -1,14 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
-import {
-  AiOutlineSearch,
-  AiOutlineMore,
-  AiOutlineCheck,
-  AiOutlineClose,
-  AiOutlineExclamationCircle,
-} from "react-icons/ai";
+import { AiOutlineMore } from "react-icons/ai";
 import {
   FaRegBookmark,
-  FaBookmark,
   FaFlag,
   FaLocationArrow,
   FaSearch,
@@ -122,33 +115,31 @@ const JobDetailsPane = ({ job }) => {
     setSop("");
   };
 
-  
   const handleApply = async () => {
     try {
-        const response = await fetch(`${apiList.jobs}/${job._id}/applications`, {
-            method: "POST",
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem("token")}`,
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ sop })
-        });
+      const response = await fetch(`${apiList.jobs}/${job._id}/applications`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ sop }),
+      });
 
-        const json = await response.json();
+      const json = await response.json();
 
-        if (response.ok) {
-            handleClose();
-            toast.success("Applied Successfully");
-        } else {
-            toast.warn(json.message || "Application failed");
-            handleClose();
-        }
-    } catch (err) {
+      if (response.ok) {
         handleClose();
-        toast.error("Error occurred while applying.");
+        toast.success("Applied Successfully");
+      } else {
+        toast.warn(json.message || "Application failed");
+        handleClose();
+      }
+    } catch (err) {
+      handleClose();
+      toast.error("Error occurred while applying.");
     }
-};
-
+  };
 
   const deadline = new Date(job.applicationDeadline).toLocaleDateString();
 
@@ -585,6 +576,10 @@ const FilterPopup = ({
 };
 
 const AllJobs = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const [jobs, setJobs] = useState([]);
   const [selectedJob, setSelectedJob] = useState(null);
   const [isFixed, setIsFixed] = useState(false);
@@ -745,31 +740,42 @@ const AllJobs = () => {
         getData={() => getData(true)}
       />
 
-<div className="grid grid-cols-1 md:grid-cols-5 gap-4 w-full">
-  <div className="col-span-2 bg-gray-50 p-4 rounded-lg">
-    {jobs.map((job) => (
-      <JobTile key={job._id} job={job} onSelectJob={() => openModal(job)} />
-    ))}
-  </div>
+      <div className="grid grid-cols-1 md:grid-cols-5 gap-4 w-full">
+        <div className="col-span-2 bg-gray-50 p-4 rounded-lg">
+          {jobs.map((job) => (
+            <JobTile
+              key={job._id}
+              job={job}
+              onSelectJob={() => openModal(job)}
+            />
+          ))}
+        </div>
 
-  {/* Modal for Job Details on Small Screens */}
-  {isModalOpen && (
-    <div className="md:hidden fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-      <div className="bg-white p-4 rounded-lg">
-        <JobDetailsPane job={selectedJob} />
-        <button className="absolute top-4 right-4 text-gray-500" onClick={closeModal}>
-          <FaTimes />
-        </button>
+        {/* Modal for Job Details on Small Screens */}
+        {isModalOpen && (
+          <div className="md:hidden fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+            <div className="bg-white p-4 rounded-lg">
+              <JobDetailsPane job={selectedJob} />
+              <button
+                className="absolute top-4 right-4 text-gray-500"
+                onClick={closeModal}
+              >
+                <FaTimes />
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* Job Details Pane for Big Screens */}
+        <div
+          className={`md:col-span-3 hidden md:block bg-gray-50 p-4 rounded-lg ${
+            isFixed ? "fixed right-12 top-16 mt-2 mr-1" : ""
+          }`}
+          style={isFixed ? { width: "55%" } : {}}
+        >
+          <JobDetailsPane job={selectedJob} />
+        </div>
       </div>
-    </div>
-  )}
-
-  {/* Job Details Pane for Big Screens */}
-  <div className={`md:col-span-3 hidden md:block bg-gray-50 p-4 rounded-lg ${isFixed ? 'fixed right-12 top-16 mt-2 mr-1' : ''}`} style={isFixed ? { width: '55%' } : {}}>
-    <JobDetailsPane job={selectedJob} />
-  </div>
-</div>
-
     </div>
   );
 };

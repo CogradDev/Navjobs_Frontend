@@ -4,15 +4,12 @@ import { toast } from "react-toastify";
 import apiList from "../../libs/apiLists";
 import { server } from "../../libs/apiLists";
 import defaultProfilePhoto from "../../Images/user.png";
-import {
-  FaChevronDown,
-  FaCalendarAlt,
-  FaGraduationCap,
-  FaClipboardList,
-  FaFileAlt,
-} from "react-icons/fa";
+import { FaChevronDown, FaCalendarAlt, FaFileAlt } from "react-icons/fa";
 
 const JobApplications = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   const { jobId } = useParams();
   const [applications, setApplications] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -67,19 +64,20 @@ const JobApplications = () => {
 
   return (
     <div className="p-6 my-5 bg-white shadow-lg rounded-lg w-full">
-      <h2 className="text-3xl font-bold text-blue-700 mb-6">Job Applications</h2>
+      <h2 className="text-3xl font-bold text-blue-700 mb-6">
+        Job Applications
+      </h2>
       {loading ? (
         <div>Loading...</div>
       ) : applications && applications.length === 0 ? (
         <div>No applications found</div>
       ) : (
         applications.map((application, index) => (
-          <div
-            className="bg-white p-6 rounded-lg shadow-md mb-6"
-            key={index}
-          >
+          <div className="bg-white p-6 rounded-lg shadow-md mb-6" key={index}>
             <div className="flex flex-col md:flex-row justify-between items-center mb-4">
-              <h3 className="text-xl font-semibold text-gray-800">Application Details</h3>
+              <h3 className="text-xl font-semibold text-gray-800">
+                Application Details
+              </h3>
               <span
                 className={`text-md font-semibold rounded-full px-3 py-1 mt-2 md:mt-0 ${getStatusColor(
                   application.status
@@ -115,29 +113,27 @@ const formatText = (text) => {
   const emailRegex = /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b/g;
   const urlRegex = /(?:https?|ftp):\/\/[\S]+/g;
 
-  return text
-    .split("\n")
-    .map((line, index) => {
-      const emailReplaced = line.replace(
-        emailRegex,
-        (match) =>
-          `<a href="mailto:${match}" class="text-blue-700 underline">${match}</a>`
-      );
+  return text.split("\n").map((line, index) => {
+    const emailReplaced = line.replace(
+      emailRegex,
+      (match) =>
+        `<a href="mailto:${match}" class="text-blue-700 underline">${match}</a>`
+    );
 
-      const urlReplaced = emailReplaced.replace(
-        urlRegex,
-        (match) =>
-          `<a href="${match}" target="_blank" rel="noopener noreferrer" class="text-blue-700 underline">${match}</a>`
-      );
+    const urlReplaced = emailReplaced.replace(
+      urlRegex,
+      (match) =>
+        `<a href="${match}" target="_blank" rel="noopener noreferrer" class="text-blue-700 underline">${match}</a>`
+    );
 
-      return (
-        <p
-          key={index}
-          className="mb-2"
-          dangerouslySetInnerHTML={{ __html: urlReplaced }}
-        />
-      );
-    });
+    return (
+      <p
+        key={index}
+        className="mb-2"
+        dangerouslySetInnerHTML={{ __html: urlReplaced }}
+      />
+    );
+  });
 };
 
 const Accordion = ({ application }) => {
@@ -153,7 +149,9 @@ const Accordion = ({ application }) => {
         className="flex justify-between items-center w-full p-4 text-left"
         onClick={toggleAccordion}
       >
-        <span className="text-lg font-semibold text-gray-800">Proposal Documents</span>
+        <span className="text-lg font-semibold text-gray-800">
+          Proposal Documents
+        </span>
         <FaChevronDown
           className={`transform transition-transform ${
             isOpen ? "rotate-180" : ""
@@ -168,7 +166,8 @@ const Accordion = ({ application }) => {
             {new Date(application.dateOfApplication).toLocaleDateString()}
           </div>
           <div className="text-gray-600 mb-4">
-            <strong className="mr-2">Statement of Purpose</strong><br/>
+            <strong className="mr-2">Statement of Purpose</strong>
+            <br />
             {formatText(application.sop)}
           </div>
           <div className="text-gray-600 mb-2">

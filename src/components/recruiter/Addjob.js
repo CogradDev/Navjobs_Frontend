@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import apiList from "../../libs/apiLists";
 import { toast } from "react-toastify";
 
 const Addjobs = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   const [newSkill, setNewSkill] = useState("");
   const [isClicked, setIsClicked] = useState(false);
   const [jobDetails, setJobDetails] = useState({
