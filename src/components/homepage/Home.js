@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Job from '../Images/job.png';
 
@@ -114,6 +114,10 @@ const Home = () => {
 				'https://static.vecteezy.com/system/resources/thumbnails/011/153/368/small_2x/3d-website-developer-working-on-laptop-illustration-png.png'
 		}
 	];
+
+	useEffect(()=>{
+		window.scrollTo(0, 0);
+	}, []);
 
 	return (
 		<>

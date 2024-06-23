@@ -38,9 +38,11 @@ function App() {
 						<Route exact path="/alljobs" element={<AllJobs />} />
 						<Route path="/job/applications/:jobId" element={<JobApplications />} />
 						<Route exact path="/emp" element={<EmployeePage />} />
-						<Route exact path="/footer" element={<Footer />} />
 						<Route exact path="*" element={<Page404 />} />
 					</Routes>
+
+					<Footer/>
+
 				</Router>
 			</AuthState>
 		</>

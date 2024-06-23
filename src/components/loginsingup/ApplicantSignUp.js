@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import applicantBGImage from "../Images/Resume folder-bro.png";
@@ -9,6 +9,11 @@ import { server } from "../../libs/apiLists";
 
 
 const ApplicantSignUp = () => {
+
+  useEffect(()=>{
+		window.scrollTo(0, 0);
+	}, []);
+
   let navigate = useNavigate();
   const context = useContext(authContext);
   const { setIsloggedin, setUserType ,setUserData} = context;

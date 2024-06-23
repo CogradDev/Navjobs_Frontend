@@ -1,8 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import Carousel from "./Carousel";
 
 const About = () => {
+
+  useEffect(()=>{
+		window.scrollTo(0, 0);
+	}, []);
+
   return (
     <section className="text-gray-600 body-font relative">
       <h1 className="bg-gradient-to-br from-[#833AB4] via-[#FD1D1D] to-[#FCB045] bg-clip-text text-6xl flex justify-center font-semibold text-transparent mt-9 lg:w-[95%] ">

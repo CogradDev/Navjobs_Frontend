@@ -585,6 +585,11 @@ const FilterPopup = ({
 };
 
 const AllJobs = () => {
+
+  useEffect(()=>{
+		window.scrollTo(0, 0);
+	}, []);
+
   const [jobs, setJobs] = useState([]);
   const [selectedJob, setSelectedJob] = useState(null);
   const [isFixed, setIsFixed] = useState(false);

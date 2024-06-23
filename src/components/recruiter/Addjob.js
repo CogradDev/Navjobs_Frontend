@@ -1,8 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import apiList from "../../libs/apiLists";
 import { toast } from "react-toastify";
 
 const Addjobs = () => {
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const [newSkill, setNewSkill] = useState("");
   const [isClicked, setIsClicked] = useState(false);
   const [jobDetails, setJobDetails] = useState({
@@ -379,9 +384,8 @@ const Addjobs = () => {
           </div>
 
           <button
-            className={`${
-              isClicked ? "animate-pulse" : ""
-            } w-full my-6 px-4 py-2 font-semibold text-white bg-gradient-to-r from-blue-700 to-purple-700 rounded-lg hover:from-blue-800 hover:to-purple-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500`}
+            className={`${isClicked ? "animate-pulse" : ""
+              } w-full my-6 px-4 py-2 font-semibold text-white bg-gradient-to-r from-blue-700 to-purple-700 rounded-lg hover:from-blue-800 hover:to-purple-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500`}
             onClick={handleUpdate}
             disabled={isClicked}
           >
